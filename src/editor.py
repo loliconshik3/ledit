@@ -238,7 +238,10 @@ class Editor:
             pass
 
     def open_directory(self, event):
-        directory = askdirectory(initialdir=self.last_dir)
+        try:
+            directory = askdirectory(initialdir=self.last_dir)
+        except:
+            directory = askdirectory()
 
         if directory != None and directory != () and directory != '':
             self.dir_tree.set_path(path=directory, clear=True)
