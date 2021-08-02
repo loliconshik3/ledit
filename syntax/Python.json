@@ -1,0 +1,32 @@
+{
+    "file_extension" : ["py"],
+
+    "string_color" : "#ce9178",
+    "comment_symbol" : "#",
+    "comment_color" : "#6a9947",
+
+    "syntax_accept_chars" : [
+        "", " ", "(", ")", "{", "}", "[", "]", ":", ".", "="
+    ],
+
+    "classes" : {
+
+        "base_class" : {
+            "color" : "#4998d6",
+            
+            "syntax_list" : [
+                "def", "pass", "break", "if", "elif", "else", "continue", "for", "in", "while",
+                "self", "try", "except", "return", "None", "True", "False", "as", "import", "from",
+                "class", "lambda", "is", "with"
+            ]
+        },
+
+        "math_class" : {
+            "color" : "#4998d6",
+            
+            "syntax_list" : [
+                "+", "+=", "-", "-=", "=", "==", "*", "*=", "/", "/=", "//", "%"
+            ]
+        }
+    }
+}

@@ -1,0 +1,20 @@
+{
+    "file_extension" : ["json"],
+
+    "string_color" : "#8fc2d4",
+    "comment_symbol" : "//",
+    "comment_color" : "#6a9947",
+
+    "syntax_accept_chars" : [
+        "", " ", "(", ")", "{", "}", "[", "]", ":", ".", "="
+    ],
+
+    "classes" : {
+
+        "base_class" : {
+            "color" : "#e90000",
+            
+            "syntax_list" : []
+        }
+    }
+}

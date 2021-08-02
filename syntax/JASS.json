@@ -1,0 +1,47 @@
+{
+    "file_extension" : ["j"],
+
+    "string_color" : "#ce9178",
+    "comment_symbol" : "//",
+    "comment_color" : "#6a9947",
+
+    "syntax_accept_chars" : [
+        "", " ", "(", ")", "{", "}", "[", "]", ":", ".", "="
+    ],
+
+    "classes" : {
+
+        "base_class" : {
+            "color" : "#ff3a66",
+            
+            "syntax_list" : [
+                "local", "if", "then", "elseif", "endif", "function", "endfunction", "library", "endlibrary",
+                "initializer", "private", "globals", "endglobals", "takes", "returns", "return", "set", "call",
+                "loop", "endloop", "exitwhen"
+            ]
+        },
+
+        "variable_class" : {
+            "color" : "#0055c8",
+            
+            "syntax_list" : [
+                "unit", "location", "integer", "real", "group", "string", "ability", "hashtable",
+				"abilcode", "attacktype", "boolean", "buff", "weapontype", "camerasetup", "damagetype",
+				"destructable", "dialog", "button", "effecttype", "texttag", "gamecache", "gamespeed",
+				"image", "item", "itemtype", "itemcode", "leaderboard", "lightning", "multiboard",
+				"ordercode", "player", "playercolor", "force", "quest", "questitem", "race", "rect",
+				"sound", "soundtype", "effect", "techcode", "timer", "timerdialog", "unitcode", "boolexpr",
+				"event", "triggeraction", "triggercondition", "region", "heroskill", "trackable", "multiboarditem",
+                "nothing", "null", "true", "false"
+            ]
+        },
+
+        "math_class" : {
+            "color" : "#aa5500",
+
+            "syntax_list" : [
+                "*", "+", "/", "-", "="
+            ]
+        }
+    }
+}

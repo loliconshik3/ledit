@@ -1,0 +1,64 @@
+{
+    "name" : "Ledit",
+    "version" : "0.0.5",
+    "window_width" : 1400,
+    "window_height" : 800,
+
+    "empty_file_name" : "Untitled",
+
+    "text_color" : "#d4d4ce",
+    "borders_color" : "#252526",
+    "background_color" : "#1e1e1e",
+    "text_cursor_color" : "#aeafad",
+
+    "directory_tree_text_color" : "#c0c6c0",
+    "directory_tree_background_color" : "#333333",
+
+    "num_of_lines_text_color" : "#c0c6c0",
+    "num_of_lines_background_color" : "#252526",
+
+    "command_line_text_color" : "#d4d4ce",
+    "command_line_bacground_color" : "#333333",
+
+    "keybinds" : {
+        "new_file"  : "<Control-Key-n>",
+        "open_file" : "<Control-Key-o>",
+        "save_file" : "<Control-Key-s>",
+        "save_as"   : "<Control-S>",
+        
+        "open_directory" : "<Control-Key-k>",
+
+        "select_text" : "<Control-Key-a>"
+    },
+
+    "commands" : {
+        "move" : "mv",
+
+        "replace" : {
+            "name" : "rp",
+            "separator" : "|",
+            "all_key" : "a",
+            "one_key" : "o"
+        }
+    },
+
+    "tab_size" : 4,
+
+    "font" : "Code New Roman",
+    "font_size" : 13,
+    "command_font" : "Code New Roman",
+    "command_font_size" : 11,
+
+    "fixed_screen_size" : true,
+    "adaptive_screen_size" : false,
+    "adaptive_screen_size_percentage" : 0.5,
+
+    "fullscreen_mode" : false,
+    "directory_tree": true,
+    "command_line" : true, 
+    "num_of_lines" : true,
+    "scrollbar" : false,
+
+    "complete_quotes" : false,
+    "complete_brackets" : false
+}
