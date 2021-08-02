@@ -30,6 +30,9 @@ class Editor:
         self.filename       = self.config['empty_file_name']
         self.window_width   = self.config['window_width']
         self.window_height  = self.config['window_height']
+
+        self.file_ext = None
+        
         self.__init_main_window()
         #===================================
 

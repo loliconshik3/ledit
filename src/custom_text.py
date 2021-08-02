@@ -161,6 +161,7 @@ class CustomText():
             for file_ext in file['file_extension']:
                 if file_ext == extension:
                     syntax_file = file
+                    self.editor.file_ext = extension
                     break
 
         try:

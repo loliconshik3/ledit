@@ -75,7 +75,7 @@ class CommandLine():
         try:
             self.info_widget.delete("all")
 
-            info_text = f"{self.editor.filename.split('/')[-1]} ({self.editor.text.widget.index('insert')}) | {self.config['name']} v{self.config['version']} | by loliconshik3"
+            info_text = f"{self.editor.filename.split('/')[-1]} ({self.editor.text.widget.index('insert')}) | {self.editor.file_ext} | utf-8 | {self.config['name']} v{self.config['version']} | by loliconshik3"
 
             self.info_widget.create_text(2, 2, anchor='nw', text=info_text, font=self.font, fill=self.config['text_color'])
         except Exception as e:
