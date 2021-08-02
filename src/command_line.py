@@ -8,14 +8,15 @@ class CommandLine():
         self.bottom_frame = tkinter.Frame(root)
         self.bottom_frame.pack(side="bottom", fill='x')
         self.config = config
+        self.editor = None
         self.text = text
 
         self.font = tkfont.Font(family=config['command_font'], size=int(config['command_font_size']))
 
-        self.widget = tkinter.Entry(self.bottom_frame, background=config['command_line_bacground_color'], 
+        self.widget = tkinter.Entry(self.bottom_frame, background=config['command_line_background_color'], 
                                                                 font=self.font)
-            
-            #self.info_widget = tkinter.Canvas(self.bottom_frame, height=20, width=200)
+
+        self.info_widget = tkinter.Canvas(self.bottom_frame, height=15, background=config['info_panel_background_color'])
         self.__init_widget()
 
     def __init_widget(self):
@@ -24,18 +25,17 @@ class CommandLine():
         """
 
         self.widget.config(insertbackground=self.config['text_cursor_color'])
-        #self.widget.config(borderwidth = 0, highlightthickness = 0)
+        self.widget.config(borderwidth = 0, highlightthickness = 0)
         self.widget.config(highlightbackground=self.config['borders_color'])
         self.widget.config(foreground=self.config['command_line_text_color'])
 
-        #self.info_widget.config(highlightbackground=self.config['borders_color'])
+        self.info_widget.config(highlightbackground=self.config['borders_color'])
 
-        self.widget.pack(side='left', fill='x', expand=True)
-        #self.info_widget.pack(side='left', fill='x', expand=True)
+        self.widget.pack(side='bottom', fill='x', expand=True)
+        self.info_widget.pack(side='bottom', fill='x', expand=True)
 
-        #info_text = f"{self.config['name']} v{self.config['version']} | by loliconshik3"
-
-        #self.info_widget.create_text(2, 2, anchor='nw', text=info_text, font=self.font, fill=self.config['text_color'])
+        info_text = f"{self.config['name']} v{self.config['version']} | by loliconshik3"
+        self.info_widget.create_text(2, 2, anchor='nw', text=info_text, font=self.font, fill=self.config['text_color'])
 
         self.widget.bind("<Return>", self.use_command)
 
@@ -70,3 +70,13 @@ class CommandLine():
 
             self.text.widget.delete("1.0", tkinter.END)
             self.text.widget.insert("1.0", data)
+
+    def redraw(self):
+        try:
+            self.info_widget.delete("all")
+
+            info_text = f"{self.editor.filename.split('/')[-1]} ({self.editor.text.widget.index('insert')}) | {self.config['name']} v{self.config['version']} | by loliconshik3"
+
+            self.info_widget.create_text(2, 2, anchor='nw', text=info_text, font=self.font, fill=self.config['text_color'])
+        except Exception as e:
+            print(e)

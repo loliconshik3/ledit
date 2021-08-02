@@ -1,6 +1,6 @@
 {
     "name" : "Ledit",
-    "version" : "0.0.5",
+    "version" : "0.0.6",
     "window_width" : 1400,
     "window_height" : 800,
 
@@ -18,7 +18,10 @@
     "num_of_lines_background_color" : "#252526",
 
     "command_line_text_color" : "#d4d4ce",
-    "command_line_bacground_color" : "#333333",
+    "command_line_background_color" : "#002833",
+
+    "info_panel_text_color" : "#d4d4ce",
+    "info_panel_background_color" : "#454e4f",
 
     "keybinds" : {
         "new_file"  : "<Control-Key-n>",

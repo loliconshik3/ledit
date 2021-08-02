@@ -59,3 +59,4 @@ class MainFrame(tk.Frame):
 
     def _on_syntax_change(self, event=None):
         self.text.syntax_redraw()
+        self.command_line.redraw()

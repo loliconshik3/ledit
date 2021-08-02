@@ -25,6 +25,14 @@ class Editor:
             self.config = json.loads(file.read())
         #===============================
 
+        #==========MainWindow Init==========
+        self.title          = self.config['name']
+        self.filename       = self.config['empty_file_name']
+        self.window_width   = self.config['window_width']
+        self.window_height  = self.config['window_height']
+        self.__init_main_window()
+        #===================================
+
         #==========Font Init==========
         self.font = tkfont.Font(family=self.config['command_font'], size=int(self.config['command_font_size']))
         #=============================
@@ -42,6 +50,8 @@ class Editor:
 
         #==========CommandLine Init==========
         self.command_line = self.main_frame.command_line
+        self.command_line.editor = self
+        self.command_line.redraw()
         #====================================
 
         #==========DirectoryTree Init==========
@@ -54,14 +64,6 @@ class Editor:
             self.main_directory = None
             #self.dir_tree.set_path(path=self.open_directory)
         #======================================
-
-        #==========MainWindow Init==========
-        self.title          = self.config['name']
-        self.filename       = self.config['empty_file_name']
-        self.window_width   = self.config['window_width']
-        self.window_height  = self.config['window_height']
-        self.__init_main_window()
-        #===================================
 
         #==========Cash Init==========
         try:
