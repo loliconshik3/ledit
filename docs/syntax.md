@@ -1,4 +1,4 @@
-<h1 align="center">How add syntax highlight</h1>
+<h1 align="center">How to add syntax highlight</h1>
 <h3 align="center">Realy, how???</h3>
 
 # Instruction
