@@ -6,6 +6,7 @@
 * `Ctrl+o` - Open file.
 * `Ctrl+s` - Save file.
 * `Ctrl+Shift+s` - Save as.
+* `Ctrl+k` - Open directory.
 
 # Work with text
 
