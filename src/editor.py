@@ -207,7 +207,13 @@ class Editor:
             data = self.text.widget.get('1.0', tkinter.END)
 
             if self.filename == self.config['empty_file_name']:
-                out = asksaveasfile(mode="w")
+                try:
+                    out = asksaveasfile(mode='w', initialdir=self.last_dir)
+                except:
+                    out = asksaveasfile(mode='w')
+                if out is None: return
+
+                #out = asksaveasfile(mode="w")
                 self.update_filename(out.name)
 
                 try:
@@ -231,7 +237,13 @@ class Editor:
         """
 
         try:
-            out = asksaveasfile(mode="w")
+            try:
+                out = asksaveasfile(mode='w', initialdir=self.last_dir)
+            except:
+                out = asksaveasfile(mode='w')
+            if out is None: return
+            #out = asksaveasfile(mode="w")
+            
             data = self.text.widget.get('1.0', tkinter.END)
             self.update_filename(out.name)
 

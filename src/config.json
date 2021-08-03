@@ -57,7 +57,7 @@
     "adaptive_screen_size_percentage" : 0.5,
 
     "fullscreen_mode" : false,
-    "directory_tree": false,
+    "directory_tree": true,
     "command_line" : true, 
     "num_of_lines" : true,
     "scrollbar" : false,

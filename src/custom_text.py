@@ -62,10 +62,9 @@ class CustomText():
         if last_char == ':' or last_char == '[' or last_char == '(' or last_char == '{':
             total_tabs += '	'
 
-        if symb != 0:
-            self.widget.insert('insert', '\n')
-            self.widget.insert('insert', total_tabs)
-            return 'break'
+        self.widget.insert('insert', '\n')
+        self.widget.insert('insert', total_tabs)
+        return 'break'
 
 
     def complete_quotes(self, event):
@@ -182,6 +181,8 @@ class CustomText():
 
         extension = self.editor.filename.split(".")[-1]
         syntax_file = None
+
+        self.editor.file_ext = None
 
         for file in self.syntax_files:
             for file_ext in file['file_extension']:
