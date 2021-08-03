@@ -1,10 +1,10 @@
 <h1 align="center">ledit</h1>
 
-<img src="https://img.shields.io/discord/682240305235624014?color=blue&label=Discord&logo=discord">
-<img src="https://img.shields.io/github/issues/loliconshik3/ledit">
-<img src="https://img.shields.io/github/stars/loliconshik3/ledit">
-<img src="https://img.shields.io/github/license/loliconshik3/ledit">
-<img src="https://img.shields.io/badge/by-loliconshik3-informational">
+![Discord](https://img.shields.io/discord/682240305235624014?color=blue&label=Discord&logo=discord)
+![Issues](https://img.shields.io/github/issues/loliconshik3/ledit)
+![Start](https://img.shields.io/github/stars/loliconshik3/ledit)
+![License](https://img.shields.io/github/license/loliconshik3/ledit)
+![By](https://img.shields.io/badge/by-loliconshik3-informational)
 
 **Ledit** - Simple, minimalist code editor, who works only with key bindings.
 
