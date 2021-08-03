@@ -1,6 +1,6 @@
 <h1 align="center">ledit</h1>
 
-![Discord](https://img.shields.io/discord/682240305235624014?color=blue&label=Discord&logo=discord)
+[![Discord](https://img.shields.io/discord/682240305235624014?color=blue&label=Discord&logo=discord)](https://discord.gg/naGkzRN)
 ![Issues](https://img.shields.io/github/issues/loliconshik3/ledit)
 ![Start](https://img.shields.io/github/stars/loliconshik3/ledit)
 ![License](https://img.shields.io/github/license/loliconshik3/ledit)
