@@ -1,6 +1,6 @@
 {
-    "name" : "Ledit",
-    "version" : "0.0.6",
+    "name" : "ledit",
+    "version" : "0.0.7",
     "window_width" : 1400,
     "window_height" : 800,
 
@@ -35,6 +35,10 @@
         
         "open_directory" : {
             "name" : "od"
+        },
+
+        "update_config" : {
+            "name" : "cfg"
         }
     },
 

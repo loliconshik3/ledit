@@ -52,39 +52,47 @@ class CommandLine():
         self.widget.delete("0", tkinter.END)
         
         if command[0] == commands['move']:
-            try:
-                self.text.widget.focus_set() 
-                self.text.widget.see(command[1])
-                self.text.widget.mark_set("insert", command[1])
-            except: pass
+            self.move(command)
 
         elif command[0] == commands['replace']['name']:
-
-            separator_index = command[2:].index(commands['replace']['separator'])
-            replaced_data = " ".join(command[2:separator_index+2])
-            replacing_data = " ".join(command[separator_index+3:])
-
-            if command[1] == commands['replace']['all_key']:
-                data = self.text.widget.get("1.0", tkinter.END).replace(replaced_data, replacing_data)
-            elif command[1] == commands['replace']['one_key']:
-                data = self.text.widget.get("1.0", tkinter.END).replace(replaced_data, replacing_data, 1)
-
-            self.text.widget.delete("1.0", tkinter.END)
-            self.text.widget.insert("1.0", data)
+            self.replace_text(command, commands)
 
         elif command[0] == commands['open']['name']:
-			
             self.editor.open_file(path = command[1])
 
         elif command[0] == commands['open_directory']['name']:
-			
             self.editor.open_directory(path = command[1])
+
+        #elif command[0] == commands['update_config']['name']:
+        #    self.editor.update_config(command[1])
+
+
+    def move(self, command):
+        try:
+            self.text.widget.focus_set() 
+            self.text.widget.see(command[1])
+            self.text.widget.mark_set("insert", command[1])
+        except: pass
+
+    def replace_text(self, command, commands):
+        separator_index = command[2:].index(commands['replace']['separator'])
+        replaced_data = " ".join(command[2:separator_index+2])
+        replacing_data = " ".join(command[separator_index+3:])
+
+        if command[1] == commands['replace']['all_key']:
+            data = self.text.widget.get("1.0", tkinter.END).replace(replaced_data, replacing_data)
+        elif command[1] == commands['replace']['one_key']:
+            data = self.text.widget.get("1.0", tkinter.END).replace(replaced_data, replacing_data, 1)
+
+        self.text.widget.delete("1.0", tkinter.END)
+        self.text.widget.insert("1.0", data)
+
 
     def redraw(self):
         try:
             self.info_widget.delete("all")
 
-            info_text = f"{self.editor.filename.split('/')[-1]} ({self.editor.text.widget.index('insert')}) | {self.editor.file_ext} | utf-8 | {self.config['name']} v{self.config['version']} | {self.config['color_theme']} | by loliconshik3"
+            info_text = f"{self.editor.filename.split('/')[-1]} ({self.editor.text.widget.index('insert')}) | ft:{self.editor.file_ext} | utf-8 | {self.config['name']} v{self.config['version']} | theme: {self.config['color_theme']} | by loliconshik3"
 
             self.info_widget.create_text(2, 2, anchor='nw', text=info_text, font=self.font, fill=self.theme['info_panel_text_color'])
         except Exception as e:

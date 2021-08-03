@@ -272,7 +272,13 @@ class Editor:
             self.main_directory = directory
             print(self.main_directory)
 
-
+    #def update_config(self):
+    #    try:
+    #        config = self.config
+    #        config['']
+    #
+    #        with open(f"{os.path.dirname(os.path.abspath(__file__))}/config.json", "r") as file:
+    #            self.config = json.loads(file.read())
 
     def select_text(self, event):
         """
