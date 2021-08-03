@@ -71,6 +71,10 @@ class CommandLine():
             self.text.widget.delete("1.0", tkinter.END)
             self.text.widget.insert("1.0", data)
 
+        elif command[0] == commands['open']['name']:
+			
+            self.editor.open_file(path = command[1])
+
     def redraw(self):
         try:
             self.info_widget.delete("all")
@@ -80,3 +84,4 @@ class CommandLine():
             self.info_widget.create_text(2, 2, anchor='nw', text=info_text, font=self.font, fill=self.config['text_color'])
         except Exception as e:
             print(e)
+

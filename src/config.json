@@ -42,7 +42,11 @@
             "separator" : "|",
             "all_key" : "a",
             "one_key" : "o"
-        }
+        },
+
+		"open" : {
+			"name" : "op"
+		}
     },
 
     "tab_size" : 4,
@@ -52,12 +56,12 @@
     "command_font" : "Code New Roman",
     "command_font_size" : 11,
 
-    "fixed_screen_size" : true,
+    "fixed_screen_size" : false,
     "adaptive_screen_size" : false,
     "adaptive_screen_size_percentage" : 0.5,
 
     "fullscreen_mode" : false,
-    "directory_tree": false,
+    "directory_tree": true,
     "command_line" : true, 
     "num_of_lines" : true,
     "scrollbar" : false,
@@ -66,3 +70,4 @@
     "complete_brackets" : false,
     "complete_indentations" : true
 }
+
