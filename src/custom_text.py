@@ -22,6 +22,8 @@ class CustomText():
         self.widget.config(borderwidth = 0, highlightthickness = 0)
         #self.widget.config(highlightbackground=config['borders_color'])
 
+        self.widget.bind('<Tab>', self.tab)
+
         # create a proxy for the underlying widget
         self._orig = self.widget._w + "_orig"
         self.widget.tk.call("rename", self.widget._w, self._orig)
@@ -42,11 +44,16 @@ class CustomText():
                 self.syntax_files[index] = json.loads(file.read())
 
 
+    def tab(self, event):
+        self.widget.insert('insert', ' '*self.editor.config['tab_size'])
+        return 'break'
+
     def complete_indentations(self, event=None):
         """
         Этот метод отвечает за дополнение отступов.
         """
 
+        tab_size = self.editor.config['tab_size']
         current_line = self.widget.index('insert linestart')
         before_line_start = utils.edit_index(current_line, -1, 0)
 
@@ -54,21 +61,22 @@ class CustomText():
 
         last_char = self.widget.get(f'{before_line_start} lineend-1c')
 
-        tabs = 0; symb = 0
+        tabs = 0; symb = 0; spaces = 0
         for char in before_text:
-            if char == '	': tabs += 1
+            if char == ' ': spaces+=1
             else: symb += 1; break
+            if spaces == tab_size: spaces=0; tabs+=1
 
-        total_tabs = '	' * tabs
+        total_tabs = ' ' * tab_size * tabs
         if last_char == ':' or last_char == '[' or last_char == '(' or last_char == '{':
-            total_tabs += '	'
+            total_tabs += ' ' * tab_size
 
         self.widget.insert('insert', total_tabs)
 
         brackets_list = [')', '}', ']']
         current_index = self.widget.index('insert')
         if self.widget.get(current_index) in brackets_list:
-            self.widget.insert(current_index, '\n'+total_tabs[:-1])
+            self.widget.insert(current_index, '\n'+total_tabs[:-tab_size])
             self.widget.mark_set('insert', current_index)
 
         return
