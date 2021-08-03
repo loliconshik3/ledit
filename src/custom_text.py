@@ -161,7 +161,7 @@ class CustomText():
 
                 if xpos == fxpos:
                     if int(fypos) < int(ypos):
-                        functions_list[count].append(utils.edit_index(pos, 0, 1))
+                        functions_list[count].append(pos)
                         self.widget.tag_add("function", functions_list[count][0], functions_list[count][1])
                         count += 1
 
