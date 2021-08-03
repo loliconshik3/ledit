@@ -65,6 +65,12 @@ class CustomText():
 
         self.widget.insert('insert', total_tabs)
 
+        brackets_list = [')', '}', ']']
+        current_index = self.widget.index('insert')
+        if self.widget.get(current_index) in brackets_list:
+            self.widget.insert(current_index, '\n')
+            self.widget.mark_set('insert', current_index)
+
         return
 
 

@@ -1,43 +1,31 @@
-import os
 import tkinter as tk
-import tkinter.ttk as ttk
+from tkinter import ttk
 
+class MainInterface:
+    def __init__(self):
+        self.window = tk.Tk()
+        self.window.title('version')
+        self.window.geometry("1024x768")
+        self.create_widgets()
 
-class App(object):
-    def __init__(self, master, path):
-        self.nodes = dict()
-        frame = tk.Frame(master)
-        self.tree = ttk.Treeview(frame)
-        ysb = ttk.Scrollbar(frame, orient='vertical', command=self.tree.yview)
-        xsb = ttk.Scrollbar(frame, orient='horizontal', command=self.tree.xview)
-        self.tree.configure(yscroll=ysb.set, xscroll=xsb.set)
-        self.tree.heading('#0', text='Project tree', anchor='w')
+    def create_widgets(self):
+        self.window['padx'] = 10
+        self.window['pady'] = 10
 
-        self.tree.grid()
-        ysb.grid(row=0, column=1, sticky='ns')
-        xsb.grid(row=1, column=0, sticky='ew')
-        frame.grid()
+        main_notebook_controll = ttk.Notebook(self.window, width=1000, height=700)
 
-        abspath = os.path.abspath(path)
-        self.insert_node('', abspath, abspath)
-        self.tree.bind('<<TreeviewOpen>>', self.open_node)
+        a_tab = ttk.Frame(main_notebook_controll)
+        b_tab = ttk.Frame(main_notebook_controll)
+        c_tab = ttk.Frame(main_notebook_controll)
 
-    def insert_node(self, parent, text, abspath):
-        node = self.tree.insert(parent, 'end', text=text, open=False)
-        if os.path.isdir(abspath):
-            self.nodes[node] = abspath
-            self.tree.insert(node, 'end')
+        main_notebook_controll.add(a_tab, text="Notebook A")
+        main_notebook_controll.add(b_tab, text="Notebook B")
+        main_notebook_controll.add(c_tab, text="Notebook C")
 
-    def open_node(self, event):
-        node = self.tree.focus()
-        abspath = self.nodes.pop(node, None)
-        if abspath:
-            self.tree.delete(self.tree.get_children(node))
-            for p in os.listdir(abspath):
-                self.insert_node(node, p, os.path.join(abspath, p))
+        main_notebook_controll.grid(row=1, column=1)
 
+        c_tab = ttk.Frame(main_notebook_controll)
+        main_notebook_controll.add(c_tab, text="Notebook D")
 
-if __name__ == '__main__':
-    root = tk.Tk()
-    app = App(root, path='.')
-    root.mainloop()
+program = MainInterface()
+program.window.mainloop()
