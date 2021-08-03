@@ -1,9 +1,14 @@
 <h1 align="center">ledit</h1>
-<h3 align="center">by loliconshik3</h3>
 
-# Description
+<img src="https://img.shields.io/discord/682240305235624014?color=blue&label=Discord&logo=discord">
+<img src="https://img.shields.io/github/issues/loliconshik3/ledit">
+<img src="https://img.shields.io/github/stars/loliconshik3/ledit">
+<img src="https://img.shields.io/github/license/loliconshik3/ledit">
+<img src="https://img.shields.io/badge/by-loliconshik3-informational">
 
-Simple, minimalist code editor, who works only with key bindings.
+**Ledit** - Simple, minimalist code editor, who works only with key bindings.
+
+Here is a ledit interface:
 
 ![Screenshot](./resources/ledit_screen_01.png)
 ![Screenshot](./resources/ledit_screen_02.png) 
