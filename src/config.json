@@ -6,7 +6,7 @@
 
     "empty_file_name" : "Untitled",
 
-    "color_theme" : "north",
+    "color_theme" : "standart",
 
     "keybinds" : {
         "new_file"  : "<Control-Key-n>",
