@@ -4,13 +4,14 @@ import json
 import os
 
 class TextLineNumbers():
-    def __init__(self, root, config, text_widget):
+    def __init__(self, root, config, text_widget, theme):
         self.widget = tk.Canvas(root, width=30)
         self.text_widget = text_widget
         self.config = config
+        self.theme = theme
 
         self.font = tkfont.Font(family=config['font'], size=config['font_size'])
-        self.widget.config(highlightbackground=config['borders_color'], background=config['num_of_lines_background_color'])
+        self.widget.config(highlightbackground=theme['borders_color'], background=theme['num_of_lines_background_color'])
 
         self.__init_canvas_widget()
         
@@ -28,7 +29,7 @@ class TextLineNumbers():
             y = dline[1]
             linenum = str(i).split(".")[0]
 
-            test = self.widget.create_text(2,y,anchor="nw", font=self.font, text=" "+linenum+" ", fill=self.config['num_of_lines_text_color'])
+            test = self.widget.create_text(2,y,anchor="nw", font=self.font, text=" "+linenum+" ", fill=self.theme['num_of_lines_text_color'])
             i = self.text_widget.index("%s+1line" % i)
 
         #Выравнивание ширины канваса под размер текста

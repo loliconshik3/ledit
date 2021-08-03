@@ -9,22 +9,21 @@ import os
 
 
 class MainFrame(tk.Frame):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, config, theme, *args, **kwargs):
         tk.Frame.__init__(self, *args, **kwargs)
 
         #=====Init Config=====
-        with open(f"{os.path.dirname(os.path.abspath(__file__))}/config.json", "r") as file:
-            config = json.loads(file.read())
         self.config = config
+        self.theme = theme
         #=====================
 
         #=====Init Text=====
-        self.text = custom_text.CustomText(self, config)
+        self.text = custom_text.CustomText(self, config, self.theme)
         #===================
 
         #=====Directory tree=====
         if config['directory_tree']:
-            self.dir_tree = directory_tree.DirectoryTree(self, config)
+            self.dir_tree = directory_tree.DirectoryTree(self, config, self.theme)
             self.dir_tree.tree.pack(side="left", fill='y')
         #========================
 
@@ -37,12 +36,12 @@ class MainFrame(tk.Frame):
 
         #=====Command line=====
         if config['command_line']:
-            self.command_line = command_line.CommandLine(self, config, self.text)
+            self.command_line = command_line.CommandLine(self, config, self.text, self.theme)
         #======================
 
         #=====Line numbers=====
         if config['num_of_lines']:
-            self.linenumbers = linenum.TextLineNumbers(self, config, self.text.widget)
+            self.linenumbers = linenum.TextLineNumbers(self, config, self.text.widget, self.theme)
         #======================
 
         #=====Pack and bind=====

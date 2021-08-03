@@ -23,6 +23,9 @@ class Editor:
         #==========Config Init==========
         with open(f"{os.path.dirname(os.path.abspath(__file__))}/config.json", "r") as file:
             self.config = json.loads(file.read())
+
+        with open(f"{os.path.dirname(os.path.abspath(__file__))[:-4]}/themes/{self.config['color_theme']}.json", "r") as theme_file:
+            self.theme = json.loads(theme_file.read())
         #===============================
 
         #==========MainWindow Init==========
@@ -41,7 +44,7 @@ class Editor:
         #=============================
 
         #==========MainFrame Init==========
-        self.main_frame = main_frame.MainFrame()
+        self.main_frame = main_frame.MainFrame(config=self.config, theme=self.theme)
         self.main_frame.pack(side="top", fill="both", expand=True)
         #==================================
 

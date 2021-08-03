@@ -4,9 +4,10 @@ import os
 
 class DirectoryTree:
 
-    def __init__(self, root, config):
+    def __init__(self, root, config, theme):
         self.root = root
         self.config = config
+        self.theme = theme
 
         self.frame = tk.Frame(root)
         self.frame.pack(side='left', fill='both')
@@ -15,11 +16,11 @@ class DirectoryTree:
 
         self.style = ttk.Style(self.tree)
         self.style.theme_use('clam')
-        self.style.configure('Treeview', background=config['directory_tree_background_color'], 
-                                         fieldbackground=config['directory_tree_background_color'], 
-                                         foreground = config['directory_tree_text_color'],
-                                         bordercolor=config['directory_tree_background_color'],
-                                         lightcolor=config['directory_tree_background_color']
+        self.style.configure('Treeview', background=theme['directory_tree_background_color'], 
+                                         fieldbackground=theme['directory_tree_background_color'], 
+                                         foreground = theme['directory_tree_text_color'],
+                                         bordercolor=theme['directory_tree_background_color'],
+                                         lightcolor=theme['directory_tree_background_color']
         )
 
         self.editor = None

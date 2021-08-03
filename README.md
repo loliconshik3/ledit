@@ -31,3 +31,5 @@ Here is a ledit interface ([Other-screenshots](./docs/screenshots.md)):
 * [Commands](./docs/commands.md)
 
 * [Syntax](./docs/syntax.md)
+
+* [Themes](./docs/themes.md)

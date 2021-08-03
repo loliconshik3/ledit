@@ -6,18 +6,19 @@ import json
 import os
 
 class CustomText():
-    def __init__(self, root, config):
+    def __init__(self, root, config, theme):
         self.widget = tk.Text(root)
         self.editor = None
+        self.theme = theme
 
-        self.widget = tk.Text(root, undo=True, background=config['background_color'], foreground=config['text_color'])
+        self.widget = tk.Text(root, undo=True, background=theme['background_color'], foreground=theme['text_color'])
         font = tkfont.Font(family=config['font'], size=config['font_size'])
         self.widget.configure(font=font)
 
         tab_size = font.measure(' ' * config['tab_size'])
         self.widget.config(tabs=tab_size)
 
-        self.widget.config(insertbackground=config['text_cursor_color'])
+        self.widget.config(insertbackground=theme['text_cursor_color'])
         self.widget.config(borderwidth = 0, highlightthickness = 0)
         #self.widget.config(highlightbackground=config['borders_color'])
 

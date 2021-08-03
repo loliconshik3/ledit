@@ -1,0 +1,18 @@
+{
+    "text_color" : "#839495",
+    "borders_color" : "#003541",
+    "background_color" : "#002833",
+    "text_cursor_color" : "#aeafad",
+
+    "directory_tree_text_color" : "#003541",
+    "directory_tree_background_color" : "#839496",
+
+    "num_of_lines_text_color" : "#566e75",
+    "num_of_lines_background_color" : "#003541",
+
+    "command_line_text_color" : "#839496",
+    "command_line_background_color" : "#002833",
+
+    "info_panel_text_color" : "#003541",
+    "info_panel_background_color" : "#839496"
+}
