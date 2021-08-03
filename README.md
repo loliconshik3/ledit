@@ -5,6 +5,10 @@
 
 Simple, minimalist code editor, who works only with key bindings.
 
+![Screenshot](./resources/ledit_screen_01.png)
+![Screenshot](./resources/ledit_screen_02.png) 
+![Screenshot](./resources/ledit_screen_03.png)
+
 # Features 
 
 * Full and simple customization
