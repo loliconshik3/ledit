@@ -48,9 +48,10 @@ class MainFrame(tk.Frame):
         #=====Pack and bind=====
         self.text.widget.pack(side="right", fill="both", expand=True)
         
-        self.text.widget.bind("<<Change>>", self._on_change)
+        self.text.widget.bind_all("<<Change>>", self._on_change)
         self.text.widget.bind("<Configure>", self._on_change)
-        self.text.widget.bind("<<SyntaxChange>>", self._on_syntax_change)
+        self.text.widget.bind_all("<<SyntaxChange>>", self._on_syntax_change)
+        self.text.widget.bind_all("<Return>", self.text.complete_indentations)
         #=======================
 
     def _on_change(self, event=None):

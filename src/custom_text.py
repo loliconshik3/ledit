@@ -21,9 +21,6 @@ class CustomText():
         self.widget.config(borderwidth = 0, highlightthickness = 0)
         #self.widget.config(highlightbackground=config['borders_color'])
 
-        if config['complete_indentations']:
-            self.widget.bind('<Return>', self.complete_indentations)
-
         # create a proxy for the underlying widget
         self._orig = self.widget._w + "_orig"
         self.widget.tk.call("rename", self.widget._w, self._orig)
@@ -44,14 +41,17 @@ class CustomText():
                 self.syntax_files[index] = json.loads(file.read())
 
 
-    def complete_indentations(self, event):
+    def complete_indentations(self, event=None):
         """
         Этот метод отвечает за дополнение отступов.
         """
 
-        before_text = (self.widget.get('insert linestart', 'insert lineend'))
+        current_line = self.widget.index('insert linestart')
+        before_line_start = utils.edit_index(current_line, -1, 0)
 
-        last_char = self.widget.get('insert lineend-1c')
+        before_text = (self.widget.get(before_line_start, f'{before_line_start} lineend'))
+
+        last_char = self.widget.get(f'{before_line_start} lineend-1c')
 
         tabs = 0; symb = 0
         for char in before_text:
@@ -62,9 +62,9 @@ class CustomText():
         if last_char == ':' or last_char == '[' or last_char == '(' or last_char == '{':
             total_tabs += '	'
 
-        self.widget.insert('insert', '\n')
         self.widget.insert('insert', total_tabs)
-        return 'break'
+
+        return
 
 
     def complete_quotes(self, event):
