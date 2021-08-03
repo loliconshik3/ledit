@@ -257,11 +257,15 @@ class Editor:
         except:
             pass
 
-    def open_directory(self, event):
-        try:
-            directory = askdirectory(initialdir=self.last_dir)
-        except:
-            directory = askdirectory()
+    def open_directory(self, event=None, path=""):
+        if path == "":
+            try:
+                directory = askdirectory(initialdir=self.last_dir)
+            except:
+                directory = askdirectory()
+            if directory is None: return
+        else:
+            directory = path
 
         if directory != None and directory != () and directory != '':
             self.dir_tree.set_path(path=directory, clear=True)

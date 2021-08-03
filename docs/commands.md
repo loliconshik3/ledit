@@ -9,3 +9,5 @@
     * `o` - Key for one replace.
 
 * `op` - Open file by input path, for example: `op /home/user/file.txt`
+
+* `od` - Open directory by input path, for example: `od /home/user/scripts`

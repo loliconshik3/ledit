@@ -31,7 +31,11 @@
 
 		"open" : {
 			"name" : "op"
-		}
+        },
+        
+        "open_directory" : {
+            "name" : "od"
+        }
     },
 
     "tab_size" : 4,

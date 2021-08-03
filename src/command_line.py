@@ -76,6 +76,10 @@ class CommandLine():
 			
             self.editor.open_file(path = command[1])
 
+        elif command[0] == commands['open_directory']['name']:
+			
+            self.editor.open_directory(path = command[1])
+
     def redraw(self):
         try:
             self.info_widget.delete("all")
