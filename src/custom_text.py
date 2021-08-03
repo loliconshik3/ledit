@@ -132,6 +132,45 @@ class CustomText():
 
         self.syntax_highlight(first_line=first_line, last_line=last_line)
 
+    def functions_highlight(self, syntax=None, color=None, first_line=None, last_line=None):
+        functions_list = {}; count = 0
+        function_syntax = syntax.split('{name}')
+
+        self.widget.tag_remove("function", "1.0", 'end')
+        start = first_line
+        pos = self.widget.search(function_syntax[0], start, stopindex=last_line)
+        while pos:
+            if not count in functions_list.keys():
+                functions_list[count] = [pos]
+            else:
+                count += 1
+                functions_list[count] = [pos]
+
+            start = utils.edit_index(pos, 0, 1)
+            pos = self.widget.search(function_syntax[0], start, stopindex=last_line)
+
+        start = first_line; count = 0
+        pos = self.widget.search(function_syntax[1], start, stopindex=last_line)
+        while pos:
+            if count in functions_list.keys():
+                tpos = pos.split('.')
+                xpos, ypos = tpos[0], tpos[1]
+
+                ftpos = functions_list[count][0].split('.')
+                fxpos, fypos = ftpos[0], ftpos[1]
+
+                if xpos == fxpos:
+                    if int(fypos) < int(ypos):
+                        functions_list[count].append(utils.edit_index(pos, 0, 1))
+                        self.widget.tag_add("function", functions_list[count][0], functions_list[count][1])
+                        count += 1
+
+            start = utils.edit_index(pos, 0, 1)
+            pos = self.widget.search(function_syntax[1], start, stopindex=last_line)
+
+        self.widget.tag_config("function", foreground=color)
+
+
     def text_highlight(self, color=None, first_line=None, last_line=None):
         """
         Данный метод отвечает за подсветку строк текста.
@@ -180,10 +219,11 @@ class CustomText():
             line_end = utils.get_line_end_index(self.widget.get("1.0", "end"), int(index))
             comment_start = f"{index}.{comments_list[index]}"
 
-            for tagname in self.widget.tag_names(None):
-                self.widget.tag_remove(tagname, comment_start, line_end)
+            if not "string" in self.widget.tag_names(comment_start):
+                for tagname in self.widget.tag_names(None):
+                    self.widget.tag_remove(tagname, comment_start, line_end)
 
-            self.widget.tag_add("comment", comment_start, line_end)
+                self.widget.tag_add("comment", comment_start, line_end)
 
         self.widget.tag_config("comment", foreground=color)
 
@@ -219,6 +259,15 @@ class CustomText():
                                     syntax_file['comment_color'],
                                     first_line=first_line,
                                     last_line=last_line)
+
+            #Functions
+            try:
+                self.functions_highlight(syntax=syntax_file['function_syntax'],
+                                        color=syntax_file['function_color'],
+                                        first_line=first_line, 
+                                        last_line=last_line)
+            except:
+                pass
 
             #Syntax
             for key in syntaxis.keys():

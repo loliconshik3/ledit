@@ -13,3 +13,4 @@ class Test:
 			
 test = Test()
 test.print_random()
+

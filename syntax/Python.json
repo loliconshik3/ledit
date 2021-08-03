@@ -9,6 +9,9 @@
         "", " ", "(", ")", "{", "}", "[", "]", ":", ".", "="
     ],
 
+    "function_syntax" : "def {name}(",
+    "function_color" : "#dcc46c",
+
     "classes" : {
 
         "base_class" : {
@@ -17,7 +20,7 @@
             "syntax_list" : [
                 "def", "pass", "break", "if", "elif", "else", "continue", "for", "in", "while",
                 "self", "try", "except", "return", "None", "True", "False", "as", "import", "from",
-                "class", "lambda", "is", "with"
+                "class", "lambda", "is", "with", "not"
             ]
         },
 
