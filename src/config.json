@@ -63,5 +63,6 @@
     "scrollbar" : false,
 
     "complete_quotes" : false,
-    "complete_brackets" : false
+    "complete_brackets" : false,
+    "complete_indentations" : true
 }
