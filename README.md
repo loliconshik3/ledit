@@ -8,11 +8,9 @@
 
 **Ledit** - Simple, minimalist code editor, who works only with key bindings.
 
-Here is a ledit interface:
+Here is a ledit interface ([Other-screenshots](./docs/screenshots.md)):
 
 ![Screenshot](./resources/ledit_screen_01.png)
-![Screenshot](./resources/ledit_screen_02.png) 
-![Screenshot](./resources/ledit_screen_03.png)
 
 # Features 
 
