@@ -18,7 +18,9 @@ Here is a ledit interface ([Other-screenshots](./docs/screenshots.md)):
 
 * Syntax highlight
 
-* Simple creating of syntax files
+* Themes support
+
+* Simple creating of syntax and theme files
 
 * Minimalist design
 
