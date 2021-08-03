@@ -13,3 +13,13 @@
 * Without scrollbar and directory tree:
 
     ![Screenshot](/resources/ledit_screen_03.png)
+
+# Themes
+
+* Standart:
+
+    ![Screenshot](/resources/ledit_screen_01.png)
+
+* North:
+
+    ![Screenshot](/resources/ledit_north.png)
