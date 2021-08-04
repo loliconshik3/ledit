@@ -22,22 +22,28 @@ class TextLineNumbers():
         '''redraw line numbers'''
         self.widget.delete("all")
 
-        i = self.text_widget.index("@0,0")
-        while True :
-            dline= self.text_widget.dlineinfo(i)
-            if dline is None: break
-            y = dline[1]
-            linenum = str(i).split(".")[0]
+        index = self.text_widget.index("@0,0")
+        while True:
+            dline = self.text_widget.dlineinfo(index)
+            linenum = str(index).split(".")[0]
+            #dline = self.text_widget.tk.call(self.text_widget, 'dlineinfo', f'{linenum}.0')
 
-            test = self.widget.create_text(2,y,anchor="nw", font=self.font, text=" "+linenum+" ", fill=self.theme['num_of_lines_text_color'])
-            i = self.text_widget.index("%s+1line" % i)
+            if dline is None: break
+            #if type(dline) is str: break
+            y = dline[1]
+
+            self.widget.create_text(2,y,anchor="nw", font=self.font, text=" "+linenum+" ", fill=self.theme['num_of_lines_text_color'])
+            index = self.text_widget.index(f"{index}+1line")
+
+        linenum = int(linenum) - 1
 
         #Выравнивание ширины канваса под размер текста
         self.widget.configure(width=50)
-        index = 1000; count = 1
+        index = 1000; count = 1; widget_width=50
         while index < 100000000:
-            width = (int(self.widget.itemcget(test, 'text')) // index)
+            width = (linenum // index)
             if width >= 1:
-                self.widget.configure(width=50+count*10)
+                widget_width = 50 + count * 10
                 count += 1
             index *= 10
+        self.widget.configure(width=widget_width)

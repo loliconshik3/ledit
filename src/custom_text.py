@@ -148,40 +148,21 @@ class CustomText():
         self.syntax_highlight(first_line=first_line, last_line=last_line)
 
     def functions_highlight(self, syntax=None, color=None, first_line=None, last_line=None):
-        functions_list = {}; count = 0
         function_syntax = syntax.split('{name}')
 
         self.widget.tag_remove("function", "1.0", 'end')
         start = first_line
         pos = self.widget.search(function_syntax[0], start, stopindex=last_line)
+        ff_length = len(function_syntax[0])
         while pos:
-            if not count in functions_list.keys():
-                functions_list[count] = [utils.edit_index(pos, 0, len(function_syntax[0]))]
-            else:
-                count += 1
-                functions_list[count] = [utils.edit_index(pos, 0, len(function_syntax[0]))]
+            func_start_pos = self.widget.index(f"{pos}+{ff_length}c")
+            func_end_pos = self.widget.search(function_syntax[1], func_start_pos, stopindex=f"{func_start_pos} lineend")
 
-            start = utils.edit_index(pos, 0, 1)
+            if func_end_pos != "":
+                self.widget.tag_add("function", func_start_pos, func_end_pos)
+
+            start = self.widget.index(f"{pos}+1c") #utils.edit_index(pos, 0, 1)
             pos = self.widget.search(function_syntax[0], start, stopindex=last_line)
-
-        start = first_line; count = 0
-        pos = self.widget.search(function_syntax[1], start, stopindex=last_line)
-        while pos:
-            if count in functions_list.keys():
-                tpos = pos.split('.')
-                xpos, ypos = tpos[0], tpos[1]
-
-                ftpos = functions_list[count][0].split('.')
-                fxpos, fypos = ftpos[0], ftpos[1]
-
-                if xpos == fxpos:
-                    if int(fypos) < int(ypos):
-                        functions_list[count].append(pos)
-                        self.widget.tag_add("function", functions_list[count][0], functions_list[count][1])
-                        count += 1
-
-            start = utils.edit_index(pos, 0, 1)
-            pos = self.widget.search(function_syntax[1], start, stopindex=last_line)
 
         self.widget.tag_config("function", foreground=color)
 
@@ -207,11 +188,11 @@ class CustomText():
                 if not count in quotes_list.keys():
                     quotes_list[count] = [pos]
                 else:
-                    quotes_list[count].append(utils.edit_index(pos, 0, 1))
+                    quotes_list[count].append(self.widget.index(f"{pos}+1c"))
                     self.widget.tag_add("string", quotes_list[count][0], quotes_list[count][1])
                     count += 1
 
-                start = utils.edit_index(pos, 0, 1)
+                start = self.widget.index(f"{pos}+1c") #utils.edit_index(pos, 0, 1)
                 pos = self.widget.search(quote, start, stopindex=last_line)
 
         self.widget.tag_config("string", foreground=color)
@@ -233,7 +214,7 @@ class CustomText():
             if not pos_x in comments_list.keys():
                 comments_list[pos_x] = pos_y
             
-            start = utils.edit_index(pos, 0, len(comment_symbol))
+            start = self.widget.index(f"{pos}+{len(comment_symbol)}c")#utils.edit_index(pos, 0, len(comment_symbol))
             pos = self.widget.search(comment_symbol, start, stopindex=last_line)
 
         self.widget.tag_remove("comment", first_line, last_line)
@@ -250,6 +231,44 @@ class CustomText():
         self.widget.tag_config("comment", foreground=color)
 
         #print("Sys | Comments highlight")
+
+    def syntax_highlighting(self, first_line=None, last_line=None, syntaxis=None, syntax_file=None):
+        for tagname in self.widget.tag_names(None):
+            if tagname in syntaxis.keys():
+                self.widget.tag_remove(tagname, first_line, last_line)
+
+        for _class in syntaxis.keys():
+            color_everywhere = syntaxis[_class]['color_everywhere']
+            syntax = syntaxis[_class]['syntax_list']
+            color = syntaxis[_class]['color']
+
+            test_syntax = {}
+            for text in syntax:
+                test_syntax[text] = text
+
+            #for text in syntax:
+            for text in test_syntax:
+                start = first_line
+                pos = self.widget.search(text, start, stopindex=last_line)
+                while pos:
+                    end = self.widget.index(f'{pos}+{len(text)}c')
+
+                    tag_names = self.widget.tag_names(pos)
+
+                    if not "comment" in tag_names and not "string" in tag_names:
+                        if not color_everywhere:
+                            before_index = utils.edit_index(pos, 0, -1); before_char = self.widget.get(before_index, pos)
+                            after_index = utils.edit_index(end, 0, 1); after_char = self.widget.get(end, after_index)
+                            if before_char in syntax_file['syntax_accept_chars'] and after_char in syntax_file['syntax_accept_chars']:
+                                self.widget.tag_add(_class, pos, end)
+                        else:
+                            self.widget.tag_add(_class, pos, end)
+
+                    start = end
+                    pos = self.widget.search(text, start, stopindex=last_line)
+
+            self.widget.tag_config(_class, foreground=color)
+
 
 
     def syntax_highlight(self, event=None, first_line=None, last_line=None):
@@ -294,48 +313,16 @@ class CustomText():
                                             color=syntax_file['function_color'],
                                             first_line=first_line, 
                                             last_line=last_line)
-                except:
-                    pass
+                except Exception as e:
+                    print(e)
 
                 #Syntax
-                for tagname in self.widget.tag_names(None):
-                    if tagname in syntaxis.keys():
-                        self.widget.tag_remove(tagname, first_line, last_line)
-
-                for _class in syntaxis.keys():
-                    color_everywhere = syntaxis[_class]['color_everywhere']
-                    syntax = syntaxis[_class]['syntax_list']
-                    color = syntaxis[_class]['color']
-
-                    test_syntax = {}
-                    for text in syntax:
-                        test_syntax[text] = text
-
-                    #for text in syntax:
-                    for text in test_syntax:
-                        start = first_line
-                        pos = self.widget.search(text, start, stopindex=last_line)
-                        while pos:
-                            end = self.widget.index(f'{pos}+{len(text)}c')
-
-                            tag_names = self.widget.tag_names(pos)
-
-                            if not "comment" in tag_names and not "string" in tag_names:
-                                if not color_everywhere:
-                                    before_index = utils.edit_index(pos, 0, -1); before_char = self.widget.get(before_index, pos)
-                                    after_index = utils.edit_index(end, 0, 1); after_char = self.widget.get(end, after_index)
-                                    if before_char in syntax_file['syntax_accept_chars'] and after_char in syntax_file['syntax_accept_chars']:
-                                        self.widget.tag_add(_class, pos, end)
-                                else:
-                                    self.widget.tag_add(_class, pos, end)
-
-                            start = end
-                            pos = self.widget.search(text, start, stopindex=last_line)
-
-                    self.widget.tag_config(_class, foreground=color)
-
-            except Exception as e:
-                print(e)
+                self.syntax_highlighting(first_line=first_line,
+                                        last_line=last_line,
+                                        syntaxis=syntaxis,
+                                        syntax_file=syntax_file)
+            except:
+                pass
 
     def _proxy(self, *args):
         # let the actual widget perform the requested action

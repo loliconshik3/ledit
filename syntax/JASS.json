@@ -19,7 +19,7 @@
             "color_everywhere" : false,
             
             "syntax_list" : [
-                "local", "if", "then", "elseif", "endif", "function", "endfunction", "library", "endlibrary",
+                "local", "if", "then", "elseif", "else", "endif", "function", "endfunction", "library", "endlibrary",
                 "initializer", "private", "globals", "endglobals", "takes", "returns", "return", "set", "call",
                 "loop", "endloop", "exitwhen"
             ]
