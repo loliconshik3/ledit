@@ -12,8 +12,9 @@ def get_line_end_index(data="", line=1):
 
 def edit_index(index="", line=0, char=0):
 
-    lines = int(index.split('.')[0]) + line
-    chars = int(index.split('.')[1]) + char
+    index = index.split('.')
+    lines = int(index[0]) + line
+    chars = int(index[1]) + char
     
     index = f"{lines}.{chars}"
 

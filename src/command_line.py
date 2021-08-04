@@ -63,6 +63,9 @@ class CommandLine():
         elif command[0] == commands['open_directory']['name']:
             self.editor.open_directory(path = command[1])
 
+        #elif command[0] == 'theme':
+        #    self.editor.theme = self.editor.theme_files[command[1]]
+
         #elif command[0] == commands['update_config']['name']:
         #    self.editor.update_config(command[1])
 

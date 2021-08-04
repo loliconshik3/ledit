@@ -1,31 +1,49 @@
 import tkinter as tk
-from tkinter import ttk
 
-class MainInterface:
-    def __init__(self):
-        self.window = tk.Tk()
-        self.window.title('version')
-        self.window.geometry("1024x768")
-        self.create_widgets()
 
-    def create_widgets(self):
-        self.window['padx'] = 10
-        self.window['pady'] = 10
+class Application(tk.Tk):
 
-        main_notebook_controll = ttk.Notebook(self.window, width=1000, height=700)
+    def __init__(self, *args, **kwargs):
+        tk.Tk.__init__(self, *args, **kwargs)
+        self.title("Colorful text")
+        self.geometry("256x64")
+        self.resizable(width=False, height=False)
 
-        a_tab = ttk.Frame(main_notebook_controll)
-        b_tab = ttk.Frame(main_notebook_controll)
-        c_tab = ttk.Frame(main_notebook_controll)
+        self.text = tk.Text(self)
+        self.text.pack()
+        self.text.insert("end", "First Line\nSecond Line")
 
-        main_notebook_controll.add(a_tab, text="Notebook A")
-        main_notebook_controll.add(b_tab, text="Notebook B")
-        main_notebook_controll.add(c_tab, text="Notebook C")
+        self.apply_color()
 
-        main_notebook_controll.grid(row=1, column=1)
+    def apply_color(self):
+        from itertools import cycle
 
-        c_tab = ttk.Frame(main_notebook_controll)
-        main_notebook_controll.add(c_tab, text="Notebook D")
+        colors = ["Red", "Green", "Blue"]
+        color_iterator = cycle(colors)
 
-program = MainInterface()
-program.window.mainloop()
+        # Get the string from the tk.Text widget.
+        text_str = self.text.get("1.0", "end-1c")
+
+        lines = text_str.splitlines(True)
+
+        for line_index, line in enumerate(lines, start=1):
+            for char_index, char in enumerate(line):
+                if char.isspace():
+                    # Ignore whitespace
+                    continue
+                color = next(color_iterator)
+                self.text.tag_add(color, f"{line_index}.{char_index}")
+        for color in colors:
+            self.text.tag_config(color, foreground=color)
+
+
+def main():
+
+    application = Application()
+    application.mainloop()
+
+    return 0
+
+if __name__ == "__main__":
+    import sys
+    sys.exit(main())
