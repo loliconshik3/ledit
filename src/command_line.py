@@ -95,7 +95,7 @@ class CommandLine():
         try:
             self.info_widget.delete("all")
 
-            info_text = f"{self.editor.filename.split('/')[-1]} ({self.editor.text.widget.index('insert')}) | ft:{self.editor.file_ext} | utf-8 | {self.config['name']} v{self.config['version']} | theme: {self.config['color_theme']} | by loliconshik3"
+            info_text = f"{self.editor.filename.split('/')[-1]} ({self.editor.text.widget.index('insert')}) | ft: {self.editor.file_ext} | utf-8 | {self.config['name']} v{self.config['version']} | theme: {self.config['color_theme']} | by loliconshik3"
 
             self.info_widget.create_text(2, 2, anchor='nw', text=info_text, font=self.font, fill=self.theme['info_panel_text_color'])
         except Exception as e:

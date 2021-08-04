@@ -104,6 +104,10 @@ class Editor:
 
     #====================Init Functions====================
     def __init_keys(self):
+        """
+        This method init key-bindigs.
+        """
+
         keybinds = self.config['keybinds']
 
         self.root.bind(keybinds['new_file'], self.new_file)
@@ -111,6 +115,9 @@ class Editor:
         self.root.bind(keybinds['select_text'], self.select_text)
         self.root.bind(keybinds['open_file'], self.open_file)
         self.root.bind_all(keybinds['save_as'], self.save_as)
+
+        if self.config['command_line']:
+            self.root.bind(keybinds['focus_command_line'], self.focus_command_line)
 
         if self.config['directory_tree']:
             self.root.bind(keybinds['open_directory'], self.open_directory)
@@ -126,7 +133,7 @@ class Editor:
 
     def __init_main_window(self):
         """
-        Данный метод отвечает за инициализацию основного окна.
+        This method init main window.
         """
 
         self.root.title(f"{self.title} | {self.filename}")
@@ -315,3 +322,14 @@ class Editor:
             self.text.widget.tag_add('sel', "1.0", 'end')
         elif self.root.focus_get() == self.command_line.widget:
             self.command_line.widget.select_range("0", 'end')
+
+    def focus_command_line(self, event):
+        """
+        This method set focus on command line, when user input key-binding.
+        Set focus on test widget, if command line has been focused.
+        """
+
+        if self.root.focus_get() != self.command_line.widget:
+            self.command_line.widget.focus_set()
+        else:
+            self.text.widget.focus_set()

@@ -1,0 +1,37 @@
+{
+    "file_extension" : ["rpy"],
+
+    "string_color" : "#ce9178",
+    "comment_symbol" : "#",
+    "comment_color" : "#6a9947",
+
+    "syntax_accept_chars" : [
+        null, "", " ", "(", ")", "{", "}", "[", "]", ":", ".", "="
+    ],
+
+    "function_syntax" : "def {name}(",
+    "function_color" : "#dcc46c",
+
+    "classes" : {
+
+        "base_class" : {
+            "color" : "#4998d6",
+            "color_everywhere" : false,
+            
+            "syntax_list" : [
+                "def", "pass", "break", "if", "elif", "else", "continue", "for", "in", "while",
+                "self", "try", "except", "return", "None", "True", "False", "as", "import", "from",
+                "class", "lambda", "is", "with", "not", "label", "scene", "jump", "menu"
+            ]
+        },
+
+        "math_class" : {
+            "color" : "#4998d6",
+            "color_everywhere" : true,
+
+            "syntax_list" : [
+                "+", "+=", "-", "-=", "=", "==", "*", "*=", "/", "/=", "//", "%", "$"
+            ]
+        }
+    }
+}

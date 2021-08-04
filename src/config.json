@@ -1,6 +1,6 @@
 {
     "name" : "ledit",
-    "version" : "0.0.8",
+    "version" : "0.0.9",
     "window_width" : 1400,
     "window_height" : 800,
 
@@ -15,6 +15,8 @@
         "save_as"   : "<Control-S>",
         
         "open_directory" : "<Control-Key-k>",
+
+        "focus_command_line" : "<Control-Key-e>",
 
         "select_text" : "<Control-Key-a>"
     },

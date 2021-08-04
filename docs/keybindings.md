@@ -11,3 +11,7 @@
 # Work with text
 
 * `Ctrl+a` - Select all text.
+
+# Work with editor
+
+* `Ctrl+e` - Set focus on command line.
