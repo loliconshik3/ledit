@@ -22,6 +22,7 @@
 
         "base_class" : {
             "color" : "#e90000",
+            "color_everywhere" : false,
             
             "syntax_list" : [
                 "local", "if", "then", "elseif", "endif"
@@ -30,6 +31,7 @@
 
         "variable_class" : {
             "color" : "#a1da1f",
+            "color_everywhere" : false,
             
             "syntax_list" : [
                 "unit", "location", "integer", "real", "group"

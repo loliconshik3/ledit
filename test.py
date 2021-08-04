@@ -1,49 +1,59 @@
 import tkinter as tk
+from pygments.lexers import PythonLexer
+from pygments.token import Token
+
+lexer = PythonLexer()
+
+root = tk.Tk()
+
+text = tk.Text(root)
+text.pack()
+
+# Создаем теги с разными свойствами, которые будем присваивать соответствующим типам токенов
+text.tag_config("keyword", foreground='blue')
+text.tag_config("string_literal", foreground='red')
+
+# Прописываем соответствие типа токена тегу подсветки
+token_type_to_tag = {
+    Token.Keyword: "keyword",
+    Token.Operator.Word: "keyword",
+    Token.Name.Builtin: "keyword",
+    Token.Literal.String.Single: "string_literal",
+    Token.Literal.String.Double: "string_literal",
+}
 
 
-class Application(tk.Tk):
-
-    def __init__(self, *args, **kwargs):
-        tk.Tk.__init__(self, *args, **kwargs)
-        self.title("Colorful text")
-        self.geometry("256x64")
-        self.resizable(width=False, height=False)
-
-        self.text = tk.Text(self)
-        self.text.pack()
-        self.text.insert("end", "First Line\nSecond Line")
-
-        self.apply_color()
-
-    def apply_color(self):
-        from itertools import cycle
-
-        colors = ["Red", "Green", "Blue"]
-        color_iterator = cycle(colors)
-
-        # Get the string from the tk.Text widget.
-        text_str = self.text.get("1.0", "end-1c")
-
-        lines = text_str.splitlines(True)
-
-        for line_index, line in enumerate(lines, start=1):
-            for char_index, char in enumerate(line):
-                if char.isspace():
-                    # Ignore whitespace
-                    continue
-                color = next(color_iterator)
-                self.text.tag_add(color, f"{line_index}.{char_index}")
-        for color in colors:
-            self.text.tag_config(color, foreground=color)
+def get_text_coord(s: str, i: int):
+    """
+    Из индекса символа получить "координату" в виде "номер_строки_текста.номер_символа_в_строке"
+    """
+    for row_number, line in enumerate(s.splitlines(keepends=True), 1):
+        if i < len(line):
+            return f'{row_number}.{i}'
+        
+        i -= len(line)
 
 
-def main():
+def on_edit(event):
+    # Удалить все имеющиеся теги из текста
+    for tag in text.tag_names():
+        text.tag_remove(tag, 1.0, tk.END)
+    
+    # Разобрать текст на токены
+    s = text.get(1.0, tk.END)
+    tokens = lexer.get_tokens_unprocessed(s)
+    
+    for i, token_type, token in tokens:
+        print(i, token_type, repr(token))  # Отладочный вывод - тут видно какие типы токенов выдаются
+        j = i + len(token)
+        if token_type in token_type_to_tag:
+            text.tag_add(token_type_to_tag[token_type], get_text_coord(s, i), get_text_coord(s, j))
 
-    application = Application()
-    application.mainloop()
+    # Сбросить флаг редактирования текста
+    text.edit_modified(0)
 
-    return 0
 
-if __name__ == "__main__":
-    import sys
-    sys.exit(main())
+text.bind('<<Modified>>', on_edit)
+
+
+root.mainloop()
