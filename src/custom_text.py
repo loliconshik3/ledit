@@ -40,12 +40,13 @@ class CustomText():
         try:
             home = os.path.expanduser('~')
             self.syntax_dir = f"{home}/.ledit/syntax"
+            self.syntax_files = os.listdir(self.syntax_dir)
         except Exception as e:
             print(e)
             
             self.syntax_dir = f"{os.path.dirname(os.path.abspath(__file__))[:-4]}/syntax"
+            self.syntax_files = os.listdir(self.syntax_dir)
         
-        self.syntax_files = os.listdir(self.syntax_dir)
         self.init_syntax_files()
 
     def init_syntax_files(self):
