@@ -33,10 +33,11 @@ class TextLineNumbers():
             i = self.text_widget.index("%s+1line" % i)
 
         #Выравнивание ширины канваса под размер текста
-        index = 1; count = 1
+        self.widget.configure(width=50)
+        index = 1000; count = 1
         while index < 100000000:
             width = (int(self.widget.itemcget(test, 'text')) // index)
             if width >= 1:
-                self.widget.configure(width=20+count*10)
+                self.widget.configure(width=50+count*10)
                 count += 1
             index *= 10

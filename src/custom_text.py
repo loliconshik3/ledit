@@ -179,6 +179,9 @@ class CustomText():
         quotes_list = {}; count = 0
         quotes = ["'", '"']
         
+        first_line = utils.edit_index(first_line, -10, 0)
+        last_line = utils.edit_index(last_line, 10, 0)
+
         self.widget.tag_remove("string", "1.0", 'end')
         for quote in quotes:
             start = first_line

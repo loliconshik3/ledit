@@ -15,6 +15,9 @@
         "", " ", "(", ")", "{", "}", "[", "]", ":", "="
     ],
 
+    "function_syntax" : "function {name} takes",
+    "function_color" : "#dcc46c",
+
     "classes" : {
 
         "base_class" : {
