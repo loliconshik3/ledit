@@ -21,11 +21,21 @@ class Editor:
         #================================
 
         #==========Config Init==========
-        with open(f"{os.path.dirname(os.path.abspath(__file__))}/config.json", "r") as file:
-            self.config = json.loads(file.read())
+        try:
+            home = os.path.expanduser("~")
+            with open(f"{home}/.ledit/config.json", "r") as file:
+                self.config = json.loads(file.read())
 
-        with open(f"{os.path.dirname(os.path.abspath(__file__))[:-4]}/themes/{self.config['color_theme']}.json", "r") as theme_file:
-            self.theme = json.loads(theme_file.read())
+            with open(f"{home}/.ledit/themes/{self.config['color_theme']}.json", "r") as theme_file:
+                self.theme = json.loads(theme_file.read())
+        except Exception as e:
+            print(e)
+
+            with open(f"{os.path.dirname(os.path.abspath(__file__))}/config.json", "r") as file:
+                self.config = json.loads(file.read())
+
+            with open(f"{os.path.dirname(os.path.abspath(__file__))[:-4]}/themes/{self.config['color_theme']}.json", "r") as theme_file:
+                self.theme = json.loads(theme_file.read())
         #===============================
 
         #==========MainWindow Init==========
@@ -73,7 +83,11 @@ class Editor:
 
         #==========Cash Init==========
         try:
-            self.cash = open(f"{os.path.dirname(os.path.abspath(__file__))}/cash", "r+")
+            try:
+                home = os.path.expanduser("~")
+                self.cash = open(f"{home}/.ledit/cash", "r+")
+            except:
+                self.cash = open(f"{os.path.dirname(os.path.abspath(__file__))}/cash", "r+")
             self.cash_text = self.cash.readlines()
             self.last_dir = self.cash_text[0]
         except Exception as e:
@@ -145,10 +159,21 @@ class Editor:
 
     def update_cash(self):
         self.cash.close()
-        self.cash = open(f"{os.path.dirname(os.path.abspath(__file__))}/cash", "w")
+
+        try:
+            home = os.path.expanduser("~")
+            self.cash = open(f"{home}/.ledit/cash", "w")
+        except:
+            self.cash = open(f"{os.path.dirname(os.path.abspath(__file__))}/cash", "w")
+
         self.cash.writelines(self.cash_text)
         self.cash.close()
-        self.cash = open(f"{os.path.dirname(os.path.abspath(__file__))}/cash", "r+")
+
+        try:
+            home = os.path.expanduser("~")
+            self.cash = open(f"{home}/.ledit/cash", "r+")
+        except:
+            self.cash = open(f"{os.path.dirname(os.path.abspath(__file__))}/cash", "r+")
 
     def update_lastdir(self, lastdir=""):
         """

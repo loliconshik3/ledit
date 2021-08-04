@@ -29,7 +29,14 @@ class CustomText():
         self.widget.tk.call("rename", self.widget._w, self._orig)
         self.widget.tk.createcommand(self.widget._w, self._proxy)
 
-        self.syntax_dir = f"{os.path.dirname(os.path.abspath(__file__))[:-4]}/syntax"
+        try:
+            home = os.path.expanduser('~')
+            self.syntax_dir = f"{home}/.ledit/syntax"
+        except Exception as e:
+            print(e)
+            
+            self.syntax_dir = f"{os.path.dirname(os.path.abspath(__file__))[:-4]}/syntax"
+        
         self.syntax_files = os.listdir(self.syntax_dir)
         self.init_syntax_files()
 
