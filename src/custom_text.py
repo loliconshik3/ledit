@@ -141,10 +141,10 @@ class CustomText():
         pos = self.widget.search(function_syntax[0], start, stopindex=last_line)
         while pos:
             if not count in functions_list.keys():
-                functions_list[count] = [pos]
+                functions_list[count] = [utils.edit_index(pos, 0, len(function_syntax[0]))]
             else:
                 count += 1
-                functions_list[count] = [pos]
+                functions_list[count] = [utils.edit_index(pos, 0, len(function_syntax[0]))]
 
             start = utils.edit_index(pos, 0, 1)
             pos = self.widget.search(function_syntax[0], start, stopindex=last_line)
@@ -167,6 +167,8 @@ class CustomText():
 
             start = utils.edit_index(pos, 0, 1)
             pos = self.widget.search(function_syntax[1], start, stopindex=last_line)
+
+        print(functions_list)
 
         self.widget.tag_config("function", foreground=color)
 
@@ -290,11 +292,14 @@ class CustomText():
                         before_index = utils.edit_index(pos, 0, -1); before_char = self.widget.get(before_index, pos)
                         after_index = utils.edit_index(end, 0, 1); after_char = self.widget.get(end, after_index)
 
-                        if (before_char in syntax_file['syntax_accept_chars'] or before_char == "	") and after_char in syntax_file['syntax_accept_chars']:
-                            if not "comment" in self.widget.tag_names(pos):
-                                if not "string" in self.widget.tag_names(pos):
+                        if not "comment" in self.widget.tag_names(pos):
+                            if not "string" in self.widget.tag_names(pos):
+                                if not syntaxis[key]['color_everywhere']:
+                                    if before_char in syntax_file['syntax_accept_chars'] and after_char in syntax_file['syntax_accept_chars']:
+                                        self.widget.tag_add(key, pos, end)
+                                else:
                                     self.widget.tag_add(key, pos, end)
-                        
+
                         start = end
                         pos = self.widget.search(text, start, stopindex=last_line)
 

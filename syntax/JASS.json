@@ -6,7 +6,7 @@
     "comment_color" : "#6a9947",
 
     "syntax_accept_chars" : [
-        "", " ", "(", ")", "{", "}", "[", "]", ":", ".", "="
+        null, "", " ", "(", ")", "{", "}", "[", "]", ":", ".", "="
     ],
 
     "function_syntax" : "function {name} takes",
@@ -16,6 +16,7 @@
 
         "base_class" : {
             "color" : "#ff3a66",
+            "color_everywhere" : false,
             
             "syntax_list" : [
                 "local", "if", "then", "elseif", "endif", "function", "endfunction", "library", "endlibrary",
@@ -26,6 +27,7 @@
 
         "variable_class" : {
             "color" : "#0055c8",
+            "color_everywhere" : false,
             
             "syntax_list" : [
                 "unit", "location", "integer", "real", "group", "string", "ability", "hashtable",
@@ -41,6 +43,7 @@
 
         "math_class" : {
             "color" : "#aa5500",
+            "color_everywhere" : true,
 
             "syntax_list" : [
                 "*", "+", "/", "-", "="

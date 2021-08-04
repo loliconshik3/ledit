@@ -6,7 +6,7 @@
     "comment_color" : "#6a9947",
 
     "syntax_accept_chars" : [
-        "", " ", "(", ")", "{", "}", "[", "]", ":", ".", "="
+        null, "", " ", "(", ")", "{", "}", "[", "]", ":", ".", "="
     ],
 
     "function_syntax" : "def {name}(",
@@ -16,17 +16,19 @@
 
         "base_class" : {
             "color" : "#4998d6",
+            "color_everywhere" : false,
             
             "syntax_list" : [
                 "def", "pass", "break", "if", "elif", "else", "continue", "for", "in", "while",
                 "self", "try", "except", "return", "None", "True", "False", "as", "import", "from",
-                "class", "lambda", "is", "with", "not"
+                "class", "lambda", "is", "with", "not", "await"
             ]
         },
 
         "math_class" : {
             "color" : "#4998d6",
-            
+            "color_everywhere" : true,
+
             "syntax_list" : [
                 "+", "+=", "-", "-=", "=", "==", "*", "*=", "/", "/=", "//", "%"
             ]
