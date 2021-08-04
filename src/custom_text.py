@@ -11,6 +11,11 @@ class CustomText():
         self.editor = None
         self.theme = theme
 
+        self.first_line = None
+        self.last_line = None
+
+        self.current_text = None
+
         self.widget = tk.Text(root, undo=True, background=theme['background_color'], foreground=theme['text_color'])
         font = tkfont.Font(family=config['font'], size=config['font_size'])
         self.widget.configure(font=font)
@@ -175,8 +180,6 @@ class CustomText():
             start = utils.edit_index(pos, 0, 1)
             pos = self.widget.search(function_syntax[1], start, stopindex=last_line)
 
-        print(functions_list)
-
         self.widget.tag_config("function", foreground=color)
 
 
@@ -245,75 +248,81 @@ class CustomText():
         """
         Данный метод отвечает за подсветку всего синтаксиса.
         """
+        current_text = self.widget.get(first_line, last_line)
 
-        extension = self.editor.filename.split(".")[-1]
-        syntax_file = None
+        if first_line != self.first_line or last_line != self.last_line or current_text != self.current_text:
+            self.first_line = first_line
+            self.last_line = last_line
+            self.current_text = current_text
 
-        self.editor.file_ext = None
+            extension = self.editor.filename.split(".")[-1]
+            syntax_file = None
 
-        for file in self.syntax_files:
-            for file_ext in file['file_extension']:
-                if file_ext == extension:
-                    syntax_file = file
-                    self.editor.file_ext = extension
-                    break
+            self.editor.file_ext = None
 
-        try:
-            syntaxis = syntax_file['classes']
-        
-            #Text
-            self.text_highlight(color=syntax_file['string_color'],
-                                first_line=first_line, 
-                                last_line=last_line)
+            for file in self.syntax_files:
+                for file_ext in file['file_extension']:
+                    if file_ext == extension:
+                        syntax_file = file
+                        self.editor.file_ext = extension
+                        break
 
-            #Comments
-            self.comments_highlight(syntax_file['comment_symbol'], 
-                                    syntax_file['comment_color'],
-                                    first_line=first_line,
+            try:
+                syntaxis = syntax_file['classes']
+            
+                #Text
+                self.text_highlight(color=syntax_file['string_color'],
+                                    first_line=first_line, 
                                     last_line=last_line)
 
-            #Functions
-            try:
-                self.functions_highlight(syntax=syntax_file['function_syntax'],
-                                        color=syntax_file['function_color'],
-                                        first_line=first_line, 
+                #Comments
+                self.comments_highlight(syntax_file['comment_symbol'], 
+                                        syntax_file['comment_color'],
+                                        first_line=first_line,
                                         last_line=last_line)
+
+                #Functions
+                try:
+                    self.functions_highlight(syntax=syntax_file['function_syntax'],
+                                            color=syntax_file['function_color'],
+                                            first_line=first_line, 
+                                            last_line=last_line)
+                except:
+                    pass
+
+                #Syntax
+                for key in syntaxis.keys():
+                    syntax = syntaxis[key]['syntax_list']
+                    color = syntaxis[key]['color']
+
+                    for tagname in self.widget.tag_names(None):
+                        if tagname == key:
+                            self.widget.tag_remove(tagname, "1.0", 'end')
+
+                    for text in syntax:
+                        start = first_line
+                        pos = self.widget.search(text, start, stopindex=last_line)
+                        while pos:
+                            end = utils.edit_index(pos, 0, len(text))
+                            
+                            before_index = utils.edit_index(pos, 0, -1); before_char = self.widget.get(before_index, pos)
+                            after_index = utils.edit_index(end, 0, 1); after_char = self.widget.get(end, after_index)
+
+                            if not "comment" in self.widget.tag_names(pos):
+                                if not "string" in self.widget.tag_names(pos):
+                                    if not syntaxis[key]['color_everywhere']:
+                                        if before_char in syntax_file['syntax_accept_chars'] and after_char in syntax_file['syntax_accept_chars']:
+                                            self.widget.tag_add(key, pos, end)
+                                    else:
+                                        self.widget.tag_add(key, pos, end)
+
+                            start = end
+                            pos = self.widget.search(text, start, stopindex=last_line)
+
+                        self.widget.tag_config(key, foreground=color)
+                        
             except:
                 pass
-
-            #Syntax
-            for key in syntaxis.keys():
-                syntax = syntaxis[key]['syntax_list']
-                color = syntaxis[key]['color']
-
-                for tagname in self.widget.tag_names(None):
-                    if tagname == key:
-                        self.widget.tag_remove(tagname, "1.0", 'end')
-
-                for text in syntax:
-                    start = first_line
-                    pos = self.widget.search(text, start, stopindex=last_line)
-                    while pos:
-                        end = utils.edit_index(pos, 0, len(text))
-                        
-                        before_index = utils.edit_index(pos, 0, -1); before_char = self.widget.get(before_index, pos)
-                        after_index = utils.edit_index(end, 0, 1); after_char = self.widget.get(end, after_index)
-
-                        if not "comment" in self.widget.tag_names(pos):
-                            if not "string" in self.widget.tag_names(pos):
-                                if not syntaxis[key]['color_everywhere']:
-                                    if before_char in syntax_file['syntax_accept_chars'] and after_char in syntax_file['syntax_accept_chars']:
-                                        self.widget.tag_add(key, pos, end)
-                                else:
-                                    self.widget.tag_add(key, pos, end)
-
-                        start = end
-                        pos = self.widget.search(text, start, stopindex=last_line)
-
-                    self.widget.tag_config(key, foreground=color)
-                    
-        except:
-            pass
 
     def _proxy(self, *args):
         # let the actual widget perform the requested action
