@@ -31,6 +31,7 @@ class CustomText():
         #self.widget.config(highlightbackground=config['borders_color'])
 
         self.widget.bind('<Tab>', self.tab)
+        self.widget.bind('<BackSpace>', self.backspace)
 
         # create a proxy for the underlying widget
         self._orig = self.widget._w + "_orig"
@@ -62,6 +63,21 @@ class CustomText():
 
     def tab(self, event):
         self.widget.insert('insert', ' '*self.editor.config['tab_size'])
+        return 'break'
+
+    def backspace(self, event):
+        sel_first, sel_last = self.widget.index('sel.first'), self.widget.index('sel.last')
+
+        tab_size_index = f"insert-{self.editor.config['tab_size']}c"
+        backspace = self.widget.get(tab_size_index, 'insert')
+
+        if backspace == " "*self.editor.config['tab_size']:
+            self.widget.delete(tab_size_index, 'insert')
+        elif sel_first == 'None':
+            self.widget.delete('insert-1c')
+        else:
+            self.widget.delete(sel_first, sel_last)
+
         return 'break'
 
     def complete_indentations(self, event=None):
