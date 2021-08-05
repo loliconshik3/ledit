@@ -1,3 +1,7 @@
+#from pynotifier import Notification
+
+#def notify(title="", description="", iconPath="", duration=5, urgency="normal"):
+#    Notification(title, description, duration, urgency, iconPath).send()
 
 
 def get_line_end_index(data="", line=1):

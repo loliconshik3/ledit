@@ -1,7 +1,9 @@
 import tkinter.font as tkfont
+import subprocess
 import tkinter
 import utils
 import sys
+import os
 
 class CommandLine():
 
@@ -63,6 +65,14 @@ class CommandLine():
 
         elif command[0] == commands['open_directory']['name']:
             self.editor.open_directory(path = command[1])
+
+        #elif command[0] == "run":
+        #    if sys.platform == "win32":
+        #        new_window_command = "cmd.exe /c start".split()
+        #    else:  
+        #        new_window_command = "terminal -e".split()
+
+        #    subprocess.check_call(new_window_command + ['python', f'{self.editor.filename}'])
 
         #elif command[0] == 'theme':
         #    self.editor.theme = self.editor.theme_files[command[1]]

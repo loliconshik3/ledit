@@ -6,6 +6,7 @@ import command_line
 import custom_text
 import main_frame
 import tkinter
+import utils
 import json
 import os
 
@@ -98,6 +99,8 @@ class Editor:
         #==========Keys Init==========
         self.__init_keys()
         #=============================
+
+        #utils.notify("Init has been complete!", "Good luck!")
 
         #==========Main Loop==========
         self.root.mainloop()
