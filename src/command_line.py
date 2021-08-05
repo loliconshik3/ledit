@@ -10,12 +10,13 @@ class CommandLine():
     def __init__(self, root, config, text, theme):
         self.bottom_frame = tkinter.Frame(root)
         self.bottom_frame.pack(side="bottom", fill='x')
-        self.config = config
-        self.editor = None
-        self.theme = theme
-        self.text = text
 
-        self.font = tkfont.Font(family=config['command_font'], size=int(config['command_font_size']))
+        self.config     = config
+        self.editor     = None
+        self.theme      = theme
+        self.text       = text
+
+        self.font   = tkfont.Font(family=config['command_font'], size=int(config['command_font_size']))
 
         self.widget = tkinter.Entry(self.bottom_frame, background=theme['command_line_background_color'], 
                                                                 font=self.font)
@@ -50,8 +51,8 @@ class CommandLine():
         Имена и аргументы комманд настраиваются в файле config.json
         """
 
-        commands = self.config['commands']
-        command = self.widget.get().split(' ')
+        commands    = self.config['commands']
+        command     = self.widget.get().split(' ')
         self.widget.delete("0", tkinter.END)
         
         if command[0] == commands['move']:
@@ -82,6 +83,13 @@ class CommandLine():
 
 
     def move(self, command):
+        """
+        Move command method. 
+
+        Move text cursor in input coordinates.
+        After that focused screen on this coordinates.
+        """
+
         try:
             self.text.widget.focus_set() 
             self.text.widget.see(command[1])
@@ -89,9 +97,15 @@ class CommandLine():
         except: pass
 
     def replace_text(self, command, commands):
+        """
+        Replace command method. 
+        
+        Replace all (or not all) text.
+        """
+
         separator_index = command[2:].index(commands['replace']['separator'])
-        replaced_data = " ".join(command[2:separator_index+2])
-        replacing_data = " ".join(command[separator_index+3:])
+        replaced_data   = " ".join(command[2:separator_index+2])
+        replacing_data  = " ".join(command[separator_index+3:])
 
         if command[1] == commands['replace']['all_key']:
             data = self.text.widget.get("1.0", tkinter.END).replace(replaced_data, replacing_data)
@@ -103,16 +117,21 @@ class CommandLine():
 
 
     def redraw(self):
+        """
+        Redraw info panel.
+        Use, when need update information on panel.
+        """
+
         try:
             self.info_widget.delete("all")
 
-            filename = self.editor.filename.split('/')[-1]
-            insert_index = self.editor.text.widget.index('insert')
-            file_ext = self.editor.file_ext
-            name = self.config['name']
-            version = self.config['version']
-            theme = self.config['color_theme']
-            system = sys.platform
+            filename        = self.editor.filename.split('/')[-1]
+            insert_index    = self.editor.text.widget.index('insert')
+            file_ext        = self.editor.file_ext
+            name            = self.config['name']
+            version         = self.config['version']
+            theme           = self.config['color_theme']
+            system          = sys.platform
 
             info_text = f"{filename} ({insert_index}) | ft: {file_ext} | utf-8 | {system} | {name} v{version} | theme: {theme} | by loliconshik3"
 

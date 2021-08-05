@@ -5,10 +5,10 @@ import os
 
 class TextLineNumbers():
     def __init__(self, root, config, text_widget, theme):
-        self.widget = tk.Canvas(root, width=30)
-        self.text_widget = text_widget
-        self.config = config
-        self.theme = theme
+        self.widget         = tk.Canvas(root, width=30)
+        self.text_widget    = text_widget
+        self.config         = config
+        self.theme          = theme
 
         self.font = tkfont.Font(family=config['font'], size=config['font_size'])
         self.widget.config(highlightbackground=theme['borders_color'], background=theme['num_of_lines_background_color'])
@@ -40,10 +40,14 @@ class TextLineNumbers():
         #Выравнивание ширины канваса под размер текста
         self.widget.configure(width=50)
         index = 1000; count = 1; widget_width=50
+
         while index < 100000000:
             width = (linenum // index)
+
             if width >= 1:
                 widget_width = 50 + count * 10
                 count += 1
+                
             index *= 10
+
         self.widget.configure(width=widget_width)

@@ -216,13 +216,17 @@ class Editor:
 
     def update_filename(self, filename=""):
         """
-        Данный метод отвечает за обновление имени открытого файла, и, соответственно, заголовка окна.
+        This method updates filename and title of the programm.
         """
 
         self.filename = filename
         self.root.title(f"{self.title} | {self.filename}")
 
     def update_cash(self):
+        """
+        This method update ledit cash.
+        """
+
         self.cash.close()
 
         try:

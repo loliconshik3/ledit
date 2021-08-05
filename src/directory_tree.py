@@ -5,9 +5,9 @@ import os
 class DirectoryTree:
 
     def __init__(self, root, config, theme):
-        self.root = root
+        self.root   = root
         self.config = config
-        self.theme = theme
+        self.theme  = theme
 
         self.frame = tk.Frame(root)
         self.frame.pack(side='left', fill='both')
@@ -26,6 +26,10 @@ class DirectoryTree:
         self.editor = None
 
     def set_path(self, parent=None, path="", clear=False):
+        """
+        This method set path to directory tree.
+        After this method tree has been update, and show new directory.
+        """
 
         if clear:
             for child in self.tree.get_children():
@@ -46,17 +50,21 @@ class DirectoryTree:
                 self.set_path(id, full_path)
 
     def open_selected_file(self, event):
+        """
+        This method open selected (in directory tree) file.
+        """
+
         curItem = self.tree.focus()
-        childs = self.tree.get_children(curItem)
+        childs  = self.tree.get_children(curItem)
         
         item_path = []
 
-        witem = curItem
-        parent = self.tree.parent(witem)
+        witem   = curItem
+        parent  = self.tree.parent(witem)
         while parent != "":
             item_path.append(self.tree.item(witem)['text'])
-            witem = parent
-            parent = self.tree.parent(witem)
+            witem   = parent
+            parent  = self.tree.parent(witem)
 
         item_path.reverse()
         item_path = "/".join(item_path)
