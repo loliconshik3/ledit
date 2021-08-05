@@ -17,9 +17,14 @@ class Editor:
 
     def __init__(self):
 
+        print("SYSTEM | Init tkinter...")
+
         #==========Tkinter Init==========
         self.root = tkinter.Tk()
         #================================
+
+        print("SYSTEM | Complete!")
+        print("SYSTEM | Read config & theme files...")
 
         #==========Config Init==========
         try:
@@ -39,6 +44,9 @@ class Editor:
                 self.theme = json.loads(theme_file.read())
         #===============================
 
+        print("SYSTEM | Complete!")
+        print("SYSTEM | Init main window...")
+
         #==========MainWindow Init==========
         self.title          = self.config['name']
         self.filename       = self.config['empty_file_name']
@@ -50,14 +58,23 @@ class Editor:
         self.__init_main_window()
         #===================================
 
+        print("SYSTEM | Complete!")
+        print("SYSTEM | Init fonts...")
+
         #==========Font Init==========
         self.font = tkfont.Font(family=self.config['command_font'], size=int(self.config['command_font_size']))
         #=============================
+
+        print("SYSTEM | Complete!")
+        print("SYSTEM | Init main frame...")
 
         #==========MainFrame Init==========
         self.main_frame = main_frame.MainFrame(config=self.config, theme=self.theme)
         self.main_frame.pack(side="top", fill="both", expand=True)
         #==================================
+
+        print("SYSTEM | Complete!")
+        print("SYSTEM | Init text widget...")
 
         #==========Text Init==========
         self.text = self.main_frame.text
@@ -66,14 +83,23 @@ class Editor:
         self.text_percentage_size = 1.0
         #=============================
 
+        print("SYSTEM | Complete!")
+
         #==========CommandLine Init==========
-        self.command_line = self.main_frame.command_line
-        self.command_line.editor = self
-        self.command_line.redraw()
+        if self.config['command_line']:
+            print("SYSTEM | Init command line widget...")
+
+            self.command_line = self.main_frame.command_line
+            self.command_line.editor = self
+            self.command_line.redraw()
+
+            print("SYSTEM | Complete!")
         #====================================
 
         #==========DirectoryTree Init==========
         if self.config['directory_tree']:
+            print("SYSTEM | Init directory tree widget...")
+
             self.dir_tree = self.main_frame.dir_tree
             self.dir_tree.editor = self
             self.dir_tree.tree.bind('<Double-1>', self.dir_tree.open_selected_file)
@@ -81,7 +107,11 @@ class Editor:
             
             self.main_directory = None
             #self.dir_tree.set_path(path=self.open_directory)
+
+            print("SYSTEM | Complete!")
         #======================================
+
+        print("SYSTEM | Init cash...")
 
         #==========Cash Init==========
         try:
@@ -96,9 +126,16 @@ class Editor:
             print("System | Cash load has been failed |", e)
         #=============================
 
+        print("SYSTEM | Complete!")
+        print("SYSTEM | Init keybindings...")
+
         #==========Keys Init==========
         self.__init_keys()
         #=============================
+
+        print("SYSTEM | Complete!")
+        print("SYSTEM | Inititalisation has been complete!")
+        print("===========================================")
 
         #utils.notify("Init has been complete!", "Good luck!")
 
