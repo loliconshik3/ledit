@@ -249,6 +249,18 @@ class Editor:
         self.text.widget.delete('1.0', tkinter.END)
         self.text.widget.insert('1.0', data)
 
+        extension = self.filename.split(".")[-1]
+
+        for file in self.text.syntax_files:
+            for file_ext in file['file_extension']:
+                if file_ext == extension:
+                    self.text.syntax_file = file
+                    if self.file_ext != extension:
+                        self.file_ext = extension
+                    break
+
+        self.text.init_syntax_colors()
+
     def save_file(self, event):
         """
         Этот метод, при использовании заданой, в файле config.json, комбинации клавиш, 

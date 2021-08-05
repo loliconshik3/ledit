@@ -17,8 +17,9 @@ class CustomText():
         self.first_line = None
         self.last_line = None
         
-        self.syntax_file = None
+        self.syntax_file = {}
         self.current_text = None
+        self.current_file = None
 
         self.widget = tk.Text(root, undo=True, background=theme['background_color'], foreground=theme['text_color'])
         self.font = tkfont.Font(family=config['font'], size=config['font_size'])
@@ -33,6 +34,7 @@ class CustomText():
 
         self.widget.bind('<Tab>', self.tab)
         self.widget.bind('<BackSpace>', self.backspace)
+        self.widget.bind(config['keybinds']['insert_copied_text'], self.insert)
 
         # create a proxy for the underlying widget
         self._orig = self.widget._w + "_orig"
@@ -72,8 +74,26 @@ class CustomText():
 
         for _class in syntax['classes'].keys():
             color = syntax['classes'][_class]['color']
-            self.widget.tag_config(_class, foreground=color)            
+            self.widget.tag_config(_class, foreground=color)      
+
+        self.syntax_highlight(first_line='1.0', last_line=self.widget.index('end'), replace=False)      
     #======================================================
+
+    def insert(self, event):
+        insert_index = self.widget.index('insert')
+        try:
+            sel_first, sel_last = self.widget.index('sel.first'), self.widget.index('sel.last')
+            self.widget.delete(sel_first, sel_last)
+        except:
+            pass
+        self.widget.insert(insert_index, self.widget.clipboard_get())
+
+        last_insert = self.widget.index('insert')
+        self.syntax_highlight(first_line=insert_index, last_line=last_insert, replace=False)
+        
+        
+        self.widget.see(last_insert)
+        return 'break'
 
     def tab(self, event):
         self.widget.insert('insert', ' '*self.editor.config['tab_size'])
@@ -181,7 +201,7 @@ class CustomText():
     def functions_highlight(self, syntax=None, color=None, first_line=None, last_line=None):
         function_syntax = syntax.split('{name}')
 
-        self.widget.tag_remove("function", "1.0", 'end')
+        self.widget.tag_remove("function", first_line, last_line)
         start = first_line
         pos = self.widget.search(function_syntax[0], start, stopindex=last_line)
         ff_length = len(function_syntax[0])
@@ -269,7 +289,7 @@ class CustomText():
         #        self.widget.tag_remove(tagname, "1.0", "end")
 
         for _class in syntaxis.keys():
-            self.widget.tag_remove(_class, "1.0", "end")
+            self.widget.tag_remove(_class, first_line, last_line)
             color_everywhere = syntaxis[_class]['color_everywhere']
             syntax = syntaxis[_class]['syntax_list']
             #color = syntaxis[_class]['color']
@@ -282,6 +302,7 @@ class CustomText():
             for text in test_syntax:
                 start = first_line
                 pos = self.widget.search(text, start, stopindex=last_line)
+
                 while pos:
                     end = self.widget.index(f'{pos}+{len(text)}c')
 
@@ -295,7 +316,6 @@ class CustomText():
                                 self.widget.tag_add(_class, pos, end)
                         else:
                             self.widget.tag_add(_class, pos, end)
-
                     start = end
                     pos = self.widget.search(text, start, stopindex=last_line)
 
@@ -303,7 +323,7 @@ class CustomText():
 
 
 
-    def syntax_highlight(self, event=None, first_line=None, last_line=None):
+    def syntax_highlight(self, event=None, first_line=None, last_line=None, replace=True):
         """
         Данный метод отвечает за подсветку всего синтаксиса.
         """
@@ -314,21 +334,15 @@ class CustomText():
             self.last_line = last_line
             self.current_text = current_text
 
-            extension = self.editor.filename.split(".")[-1]
-            syntax_file = None
+            syntax_file = self.syntax_file
 
-            for file in self.syntax_files:
-                for file_ext in file['file_extension']:
-                    if file_ext == extension:
-                        syntax_file = file
-                        self.syntax_file = file
-                        if self.editor.file_ext != extension:
-                            self.editor.file_ext = extension
-                            self.init_syntax_colors()
-                        break
+            if replace:
+                first_line = self.widget.index('insert linestart')
+                last_line = self.widget.index('insert lineend')
+
             try:
                 syntaxis = syntax_file['classes']
-            
+
                 #Text
                 self.text_highlight(color=syntax_file['string_color'],
                                     first_line=first_line, 

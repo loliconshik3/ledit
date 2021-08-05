@@ -19,6 +19,7 @@
         "focus_command_line" : "<Control-Key-e>",
 
         "select_text" : "<Control-Key-a>",
+        "insert_copied_text" : "<Control-Key-v>",
         "zoom_text_up" : "<Control-Key-equal>",
         "zoom_text_down" : "<Control-Key-minus>"
     },

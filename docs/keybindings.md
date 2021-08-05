@@ -11,6 +11,7 @@
 # Work with text
 
 * `Ctrl+a` - Select all text.
+* `Ctrl+v` - Insert copied text.
 * `Ctrl+=` - Up text zoom.
 * `Ctrl+-` - Down text zoom.
 
