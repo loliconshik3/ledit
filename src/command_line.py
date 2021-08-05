@@ -1,6 +1,7 @@
 import tkinter.font as tkfont
 import tkinter
 import utils
+import sys
 
 class CommandLine():
 
@@ -95,7 +96,15 @@ class CommandLine():
         try:
             self.info_widget.delete("all")
 
-            info_text = f"{self.editor.filename.split('/')[-1]} ({self.editor.text.widget.index('insert')}) | ft: {self.editor.file_ext} | utf-8 | {self.config['name']} v{self.config['version']} | theme: {self.config['color_theme']} | by loliconshik3"
+            filename = self.editor.filename.split('/')[-1]
+            insert_index = self.editor.text.widget.index('insert')
+            file_ext = self.editor.file_ext
+            name = self.config['name']
+            version = self.config['version']
+            theme = self.config['color_theme']
+            system = sys.platform
+
+            info_text = f"{filename} ({insert_index}) | ft: {file_ext} | utf-8 | {system} | {name} v{version} | theme: {theme} | by loliconshik3"
 
             self.info_widget.create_text(2, 2, anchor='nw', text=info_text, font=self.font, fill=self.theme['info_panel_text_color'])
         except Exception as e:
