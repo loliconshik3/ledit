@@ -17,6 +17,7 @@ class CustomText():
         self.first_line = None
         self.last_line = None
         
+        self.syntax_file = None
         self.current_text = None
 
         self.widget = tk.Text(root, undo=True, background=theme['background_color'], foreground=theme['text_color'])
@@ -50,6 +51,7 @@ class CustomText():
         
         self.init_syntax_files()
 
+    #====================Init Functions====================
     def init_syntax_files(self):
         """
         Данный метод отвечает за инициализацию файлов синтаксиса.
@@ -60,6 +62,18 @@ class CustomText():
             with open(f"{self.syntax_dir}/{self.syntax_files[index]}", "r") as file:
                 self.syntax_files[index] = json.loads(file.read())
 
+    def init_syntax_colors(self):
+        print('init colors')
+
+        syntax = self.syntax_file
+        self.widget.tag_config("function", foreground=syntax['function_color'])
+        self.widget.tag_config("string", foreground=syntax['string_color'])
+        self.widget.tag_config("comment", foreground=syntax['comment_color'])
+
+        for _class in syntax['classes'].keys():
+            color = syntax['classes'][_class]['color']
+            self.widget.tag_config(_class, foreground=color)            
+    #======================================================
 
     def tab(self, event):
         self.widget.insert('insert', ' '*self.editor.config['tab_size'])
@@ -181,7 +195,7 @@ class CustomText():
             start = self.widget.index(f"{pos}+1c") #utils.edit_index(pos, 0, 1)
             pos = self.widget.search(function_syntax[0], start, stopindex=last_line)
 
-        self.widget.tag_config("function", foreground=color)
+        #self.widget.tag_config("function", foreground=color)
 
         #print("Sys | Functions highlight")
 
@@ -212,7 +226,7 @@ class CustomText():
                 start = self.widget.index(f"{pos}+1c") #utils.edit_index(pos, 0, 1)
                 pos = self.widget.search(quote, start, stopindex=last_line)
 
-        self.widget.tag_config("string", foreground=color)
+        #self.widget.tag_config("string", foreground=color)
 
         #print("Sys | Text highlight")
 
@@ -245,19 +259,20 @@ class CustomText():
 
                 self.widget.tag_add("comment", comment_start, line_end)
 
-        self.widget.tag_config("comment", foreground=color)
+        #self.widget.tag_config("comment", foreground=color)
 
         #print("Sys | Comments highlight")
 
     def syntax_highlighting(self, first_line=None, last_line=None, syntaxis=None, syntax_file=None):
-        for tagname in self.widget.tag_names(None):
-            if tagname in syntaxis.keys():
-                self.widget.tag_remove(tagname, first_line, last_line)
+        #for tagname in self.widget.tag_names(None):
+        #    if tagname in syntaxis.keys():
+        #        self.widget.tag_remove(tagname, "1.0", "end")
 
         for _class in syntaxis.keys():
+            self.widget.tag_remove(_class, "1.0", "end")
             color_everywhere = syntaxis[_class]['color_everywhere']
             syntax = syntaxis[_class]['syntax_list']
-            color = syntaxis[_class]['color']
+            #color = syntaxis[_class]['color']
 
             test_syntax = {}
             for text in syntax:
@@ -284,7 +299,7 @@ class CustomText():
                     start = end
                     pos = self.widget.search(text, start, stopindex=last_line)
 
-            self.widget.tag_config(_class, foreground=color)
+            #self.widget.tag_config(_class, foreground=color)
 
 
 
@@ -302,13 +317,14 @@ class CustomText():
             extension = self.editor.filename.split(".")[-1]
             syntax_file = None
 
-            self.editor.file_ext = None
-
             for file in self.syntax_files:
                 for file_ext in file['file_extension']:
                     if file_ext == extension:
                         syntax_file = file
-                        self.editor.file_ext = extension
+                        self.syntax_file = file
+                        if self.editor.file_ext != extension:
+                            self.editor.file_ext = extension
+                            self.init_syntax_colors()
                         break
             try:
                 syntaxis = syntax_file['classes']
