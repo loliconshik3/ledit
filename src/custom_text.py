@@ -16,14 +16,14 @@ class CustomText():
 
         self.first_line = None
         self.last_line = None
-
+        
         self.current_text = None
 
         self.widget = tk.Text(root, undo=True, background=theme['background_color'], foreground=theme['text_color'])
-        font = tkfont.Font(family=config['font'], size=config['font_size'])
-        self.widget.configure(font=font)
+        self.font = tkfont.Font(family=config['font'], size=config['font_size'])
+        self.widget.configure(font=self.font)
 
-        tab_size = font.measure(' ' * config['tab_size'])
+        tab_size = self.font.measure(' ' * config['tab_size'])
         self.widget.config(tabs=tab_size)
 
         self.widget.config(insertbackground=theme['text_cursor_color'])

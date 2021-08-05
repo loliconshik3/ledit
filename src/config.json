@@ -18,7 +18,9 @@
 
         "focus_command_line" : "<Control-Key-e>",
 
-        "select_text" : "<Control-Key-a>"
+        "select_text" : "<Control-Key-a>",
+        "zoom_text_up" : "<Control-Key-equal>",
+        "zoome_text_down" : "<Control-Key-minus>"
     },
 
     "commands" : {

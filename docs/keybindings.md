@@ -11,6 +11,8 @@
 # Work with text
 
 * `Ctrl+a` - Select all text.
+* `Ctrl+=` - Up text zoom.
+* `Ctrl+-` - Down text zoom.
 
 # Work with editor
 

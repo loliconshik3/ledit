@@ -62,6 +62,7 @@ class Editor:
         self.text = self.main_frame.text
         self.text.editor = self
         self.text.widget.focus_set()
+        self.text_percentage_size = 1.0
         #=============================
 
         #==========CommandLine Init==========
@@ -116,6 +117,9 @@ class Editor:
         self.root.bind(keybinds['open_file'], self.open_file)
         self.root.bind_all(keybinds['save_as'], self.save_as)
 
+        self.text.widget.bind(keybinds['zoom_text_up'], self.up_text_size)
+        self.text.widget.bind(keybinds['zoom_text_down'], self.down_text_size)
+
         if self.config['command_line']:
             self.root.bind(keybinds['focus_command_line'], self.focus_command_line)
 
@@ -156,6 +160,20 @@ class Editor:
     #======================================================
 
     #====================Update Functions====================
+    def up_text_size(self, event):
+        if self.text_percentage_size < 2.0:
+            self.text_percentage_size += 0.25
+
+            self.text.font.configure(size=int(self.config['font_size'] * self.text_percentage_size))
+            self.text.widget.configure(font=self.text.font)
+
+    def down_text_size(self, event):
+        if self.text_percentage_size > 0.75:
+            self.text_percentage_size -= 0.25
+
+            self.text.font.configure(size=int(self.config['font_size'] * self.text_percentage_size))
+            self.text.widget.configure(font=self.text.font)
+
     def update_filename(self, filename=""):
         """
         Данный метод отвечает за обновление имени открытого файла, и, соответственно, заголовка окна.
