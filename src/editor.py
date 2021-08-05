@@ -248,6 +248,7 @@ class Editor:
 
         self.text.widget.delete('1.0', tkinter.END)
         self.text.widget.insert('1.0', data)
+        self.text.widget.mark_set('insert', '1.0')
 
         extension = self.filename.split(".")[-1]
 
