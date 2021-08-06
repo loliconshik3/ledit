@@ -81,6 +81,7 @@ class Editor:
         self.text.editor = self
         self.text.widget.focus_set()
         self.text_percentage_size = 1.0
+        self.current_file_text = None
         #=============================
 
         print("SYSTEM | Complete!")
@@ -292,6 +293,7 @@ class Editor:
 
         self.text.widget.delete('1.0', tkinter.END)
         self.text.widget.insert('1.0', data)
+        self.current_file_text = self.text.widget.get('1.0', 'end')
         self.text.widget.mark_set('insert', '1.0')
 
         extension = self.filename.split(".")[-1]
@@ -315,6 +317,9 @@ class Editor:
 
         try:
             data = self.text.widget.get('1.0', tkinter.END)
+
+            self.current_file_text = data
+            self.command_line.redraw()
 
             if self.filename == self.config['empty_file_name']:
                 try:
@@ -355,6 +360,8 @@ class Editor:
             #out = asksaveasfile(mode="w")
             
             data = self.text.widget.get('1.0', tkinter.END)
+            self.current_file_text = data
+            self.command_line.redraw()
             self.update_filename(out.name)
 
             try:
