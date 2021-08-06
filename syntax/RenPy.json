@@ -21,7 +21,17 @@
             "syntax_list" : [
                 "def", "pass", "break", "if", "elif", "else", "continue", "for", "in", "while",
                 "self", "try", "except", "return", "None", "True", "False", "as", "import", "from",
-                "class", "lambda", "is", "with", "not", "label", "scene", "jump", "menu"
+                "class", "lambda", "is", "with", "not", "label", "scene", "jump", "menu", "define",
+                "zoom", "align", "image", "init", "python", "style", "properties", "language",
+                "adjust_spacing", "hover_underline", "yalign", "xalign", "ysize", "xsize",
+                "base_bar", "thumb", "top_bar", "bottom_bar", "background", "padding", "screen",
+                "window", "id", "style_prefix", "xfill", "yfill", "xpos", "ypos", "vbox", "hbox",
+                "yanchor", "xanchor", "spacing", "zorder", "textbutton", "imagebutton", "action",
+                "default", "modal", "frame", "null", "size_group", "tag", "add", "use", "xmaximum",
+                "ymaximum", "xoffset", "yoffset", "unscrollable", "text_align", "layout", "hover_color",
+                "xpadding", "ypadding", "height", "width", "top_margin", "bottom_margin", "foreground",
+                "text", "key", "font", "yfit", "xfit", "min_width", "max_width", "min_height", "max_height",
+                "variant"
             ]
         },
 
