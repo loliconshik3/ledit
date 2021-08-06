@@ -31,7 +31,7 @@
                 "ymaximum", "xoffset", "yoffset", "unscrollable", "text_align", "layout", "hover_color",
                 "xpadding", "ypadding", "height", "width", "top_margin", "bottom_margin", "foreground",
                 "text", "key", "font", "yfit", "xfit", "min_width", "max_width", "min_height", "max_height",
-                "variant"
+                "variant", "play", "music", "sound", "show"
             ]
         },
 
