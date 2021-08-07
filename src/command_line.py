@@ -72,7 +72,7 @@ class CommandLine():
         #        new_window_command = "cmd.exe /c start".split()
         #    else:  
         #        new_window_command = "terminal -e".split()
-
+        #
         #    subprocess.check_call(new_window_command + ['python', f'{self.editor.filename}'])
 
         #elif command[0] == 'theme':
@@ -128,8 +128,8 @@ class CommandLine():
             filename        = self.editor.filename.split('/')[-1]
             insert_index    = self.editor.text.widget.index('insert')
             file_ext        = self.editor.file_ext
-            name            = self.config['name']
-            version         = self.config['version']
+            name            = self.editor.maincfg['title'] #self.config['name']
+            version         = self.editor.maincfg['version'] #self.config['version']
             theme           = self.config['color_theme']
             system          = sys.platform
 

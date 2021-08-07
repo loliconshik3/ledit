@@ -42,14 +42,17 @@ class Editor:
 
             with open(f"{os.path.dirname(os.path.abspath(__file__))[:-4]}/themes/{self.config['color_theme']}.json", "r") as theme_file:
                 self.theme = json.loads(theme_file.read())
+
+        with open (f"{os.path.dirname(os.path.abspath(__file__))}/ledit.json", "r") as main_config_file:
+            self.maincfg = json.loads(main_config_file.read())
         #===============================
 
         print("SYSTEM | Complete!")
         print("SYSTEM | Init main window...")
 
         #==========MainWindow Init==========
-        self.title          = self.config['name']
-        self.filename       = self.config['empty_file_name']
+        self.title          = self.maincfg['title'] #self.config['name']
+        self.filename       = self.maincfg['empty_file_name'] #self.config['empty_file_name']
         self.window_width   = self.config['window_width']
         self.window_height  = self.config['window_height']
 

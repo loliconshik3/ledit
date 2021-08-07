@@ -1,10 +1,6 @@
 {
-    "name" : "ledit",
-    "version" : "0.0.9",
     "window_width" : 1400,
     "window_height" : 800,
-
-    "empty_file_name" : "Untitled",
 
     "color_theme" : "standart",
 

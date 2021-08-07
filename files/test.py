@@ -22,5 +22,3 @@ test.print_random()
 test.reset_random()
 test.print_random()
 
-input()
-
