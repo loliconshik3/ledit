@@ -29,7 +29,8 @@ class Editor:
         #==========Config Init==========
         try:
             home = os.path.expanduser("~")
-            with open(f"{home}/.ledit/config.json", "r") as file:
+            self.config_path = f"{home}/.ledit/config.json"
+            with open(self.config_path, "r") as file:
                 self.config = json.loads(file.read())
 
             with open(f"{home}/.ledit/themes/{self.config['color_theme']}.json", "r") as theme_file:
@@ -37,7 +38,8 @@ class Editor:
         except Exception as e:
             print(e)
 
-            with open(f"{os.path.dirname(os.path.abspath(__file__))}/config.json", "r") as file:
+            self.config_path = f"{os.path.dirname(os.path.abspath(__file__))}/config.json"
+            with open(self.config_path, "r") as file:
                 self.config = json.loads(file.read())
 
             with open(f"{os.path.dirname(os.path.abspath(__file__))[:-4]}/themes/{self.config['color_theme']}.json", "r") as theme_file:

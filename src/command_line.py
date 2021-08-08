@@ -68,6 +68,9 @@ class CommandLine():
         elif command[0] == commands['open_directory']['name']:
             self.editor.open_directory(path = command[1])
 
+        elif command[0] == commands['open_config']['name']:
+            self.editor.open_file(path=self.editor.config_path)
+
         #elif command[0] == "run":
         #    if sys.platform == "win32":
         #        new_window_command = "cmd.exe /c start".split()

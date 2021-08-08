@@ -39,7 +39,7 @@
             "name" : "od"
         },
 
-        "update_config" : {
+        "open_config" : {
             "name" : "cfg"
         }
     },

@@ -70,7 +70,8 @@ class CustomText():
         print('SYSTEM | Init syntax colors')
 
         syntax = self.syntax_file
-        self.widget.tag_config("function", foreground=syntax['function_color'])
+        try: self.widget.tag_config("function", foreground=syntax['function_color']) 
+        except: pass
         self.widget.tag_config("string", foreground=syntax['string_color'])
         self.widget.tag_config("comment", foreground=syntax['comment_color'])
 
