@@ -17,5 +17,9 @@
             
             "syntax_list" : []
         }
+    },
+
+    "macros" : {
+        "main" : "{\n\ttest\n}"
     }
 }

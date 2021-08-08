@@ -1,9 +1,6 @@
 import tkinter.font as tkfont
 import tkinter as tk
 import linenum
-
-import timeit
-
 import utils
 import json
 import os
@@ -65,7 +62,11 @@ class CustomText():
                 self.syntax_files[index] = json.loads(file.read())
 
     def init_syntax_colors(self):
-        print('init colors')
+        """
+        Init colors of syntax highlight.
+        """
+
+        print('SYSTEM | Init syntax colors')
 
         syntax = self.syntax_file
         self.widget.tag_config("function", foreground=syntax['function_color'])
@@ -80,6 +81,10 @@ class CustomText():
     #======================================================
 
     def insert(self, event):
+        """
+        Ctrl+v call this method.
+        """
+
         insert_index = self.widget.index('insert')
         try:
             sel_first, sel_last = self.widget.index('sel.first'), self.widget.index('sel.last')
@@ -96,10 +101,54 @@ class CustomText():
         return 'break'
 
     def tab(self, event):
-        self.widget.insert('insert', ' '*self.editor.config['tab_size'])
+        """
+        Tab key call this method.
+        """
+
+        if not self.macros():
+            self.widget.insert('insert', ' '*self.editor.config['tab_size'])
         return 'break'
 
+    def macros(self):
+        """
+        Macros method.
+        """
+
+        try:
+            macros_list = self.syntax_file['macros']
+
+            insert_index = self.widget.index('insert')
+
+            for macros in macros_list.keys():
+                macros_start_index = self.widget.index(f'insert-{len(macros)}c')
+                macros_before_char = self.widget.get(f"{macros_start_index}-1c", macros_start_index)
+
+                if self.widget.get(macros_start_index, insert_index) == macros:
+
+                    if macros_before_char == "" or macros_before_char == "\n" or macros_before_char == " ":
+                        tabs = utils.get_line_tabs(self.widget.get(f"{macros_start_index} linestart", f"{macros_start_index} lineend"),
+                        self.editor.config['tab_size'])
+                        tab_string = (self.editor.config['tab_size'] * " ") * tabs
+
+                        self.widget.delete(macros_start_index, insert_index)
+
+                        total_text = macros_list[macros].replace('\t\t', "  " * self.editor.config['tab_size'] + tab_string)
+                        total_text = total_text.replace('\t', " " * self.editor.config['tab_size'] + tab_string)
+                        self.widget.insert('insert', total_text)
+
+                        self.syntax_highlight(first_line=macros_start_index, last_line=self.widget.index('insert'), replace=False)
+
+                        return True
+        except:
+            pass
+
+        return False
+
     def backspace(self, event):
+        """
+        Backspace key call this method.
+        """
+
         sel_first, sel_last = self.widget.index('sel.first'), self.widget.index('sel.last')
 
         tab_size_index = f"insert-{self.editor.config['tab_size']}c"

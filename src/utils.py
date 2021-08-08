@@ -26,3 +26,12 @@ def edit_index(index="", line=0, char=0):
     index = f"{lines}.{chars}"
 
     return index
+
+def get_line_tabs(data, tab_size):
+    tabs = 0; symb = 0; spaces = 0
+    for char in data:
+        if char == ' ': spaces+=1
+        else: symb += 1; break
+        if spaces == tab_size: spaces=0; tabs+=1
+
+    return tabs

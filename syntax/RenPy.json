@@ -43,5 +43,9 @@
                 "+", "+=", "-", "-=", "=", "==", "*", "*=", "/", "/=", "//", "%", "$"
             ]
         }
+    },
+
+    "macros" : {
+        "menu" : "menu:\n\tfirst_choice:\n\t\tpass\n\tsecond_choice:\n\t\tpass"
     }
 }

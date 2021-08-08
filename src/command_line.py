@@ -39,8 +39,9 @@ class CommandLine():
         self.widget.pack(side='bottom', fill='x', expand=True)
         self.info_widget.pack(side='bottom', fill='x', expand=True)
 
-        info_text = f"{self.config['name']} v{self.config['version']} | by loliconshik3"
-        self.info_widget.create_text(2, 2, anchor='nw', text=info_text, font=self.font, fill=self.theme['text_color'])
+        self.redraw()
+        #info_text = f"{self.config['name']} v{self.config['version']} | by loliconshik3"
+        #self.info_widget.create_text(2, 2, anchor='nw', text=info_text, font=self.font, fill=self.theme['text_color'])
 
         self.widget.bind("<Return>", self.use_command)
 

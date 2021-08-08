@@ -37,6 +37,11 @@
                 "unit", "location", "integer", "real", "group"
             ]
         }
+    },
+
+    "macros" : {
+        "function" : "function name takes nothing returns nothing\n\tcall DoNothing()\nendfunction",
+        "loop" : "loop\n\texitwhen index > num\n\tcall DoNothing()\n\tset index = index + 1\nendloop"
     }
 }
 ```

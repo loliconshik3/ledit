@@ -24,6 +24,8 @@ Here is a ledit interface ([Other-screenshots](./docs/screenshots.md)):
 
 * Minimalist design
 
+* Macros
+
 * All text editor functions
 
 # Documentation
