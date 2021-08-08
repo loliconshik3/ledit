@@ -32,6 +32,7 @@ class CustomText():
         self.widget.bind('<Tab>', self.tab)
         self.widget.bind('<BackSpace>', self.backspace)
         self.widget.bind(config['keybinds']['insert_copied_text'], self.insert)
+        self.widget.bind(config['keybinds']['remove_indentations'], self.remove_indentations)
 
         # create a proxy for the underlying widget
         self._orig = self.widget._w + "_orig"
@@ -156,6 +157,27 @@ class CustomText():
 
         return False
 
+    def remove_indentations(self, event):
+        """
+        Remove indentations in selected text.
+        """
+
+        sel_first, sel_last = self.widget.index('sel.first'), self.widget.index('sel.last')
+
+        if sel_first != 'None':
+            selected_lines = int(int(float(sel_last)) - int(float(sel_first))) + 1
+            first_selected_line = int(float(sel_first))
+
+            for line in range(selected_lines):
+                line += first_selected_line
+                tab_string = ' ' * self.editor.config['tab_size']
+
+                if self.widget.get(f"{line}.0", f"{line}.{self.editor.config['tab_size']}") == tab_string:
+                    self.widget.delete(f'{line}.0', f"{line}.{self.editor.config['tab_size']}")
+
+        return 'break'
+
+
     def backspace(self, event):
         """
         Backspace key call this method.
@@ -166,7 +188,7 @@ class CustomText():
         tab_size_index = f"insert-{self.editor.config['tab_size']}c"
         backspace = self.widget.get(tab_size_index, 'insert')
 
-        if backspace == " "*self.editor.config['tab_size']:
+        if backspace == " " * self.editor.config['tab_size']:
             self.widget.delete(tab_size_index, 'insert')
         elif sel_first == 'None':
             self.widget.delete('insert-1c')

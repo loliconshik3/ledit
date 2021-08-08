@@ -14,6 +14,7 @@
 * `Ctrl+v` - Insert copied text.
 * `Ctrl+=` - Up text zoom.
 * `Ctrl+-` - Down text zoom.
+* `Shift+BackSpace` - Remove indentations in selected text.
 
 # Work with editor
 
