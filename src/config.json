@@ -41,6 +41,10 @@
 
         "open_config" : {
             "name" : "cfg"
+        },
+
+        "select" : {
+            "name" : "sl"
         }
     },
 

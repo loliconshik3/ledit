@@ -8,9 +8,11 @@
     * `a` - Key for full replace.
     * `o` - Key for one replace.
 
-* `op` - Open file by input path, for example: `op /home/user/file.txt`
+* `op` - Open file by input path, for example: `op /home/user/file.txt`.
 
-* `od` - Open directory by input path, for example: `od /home/user/scripts`
+* `od` - Open directory by input path, for example: `od /home/user/scripts`.
+
+* `sl` - Select text in input coordinates, for example: `sl 1.0 5.0`.
 
 # Other
 

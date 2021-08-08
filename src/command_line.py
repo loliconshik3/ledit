@@ -71,6 +71,9 @@ class CommandLine():
         elif command[0] == commands['open_config']['name']:
             self.editor.open_file(path=self.editor.config_path)
 
+        elif command[0] == commands['select']['name']:
+            self.select_text(start=command[1], end=command[2])
+
         #elif command[0] == "run":
         #    if sys.platform == "win32":
         #        new_window_command = "cmd.exe /c start".split()
@@ -85,6 +88,11 @@ class CommandLine():
         #elif command[0] == commands['update_config']['name']:
         #    self.editor.update_config(command[1])
 
+    def select_text(self, start, end):
+        self.text.widget.focus_set()
+        self.text.widget.mark_set('insert', end)
+        self.text.widget.see(end)
+        self.text.widget.tag_add('sel', start, end)
 
     def move(self, command):
         """
