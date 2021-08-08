@@ -105,8 +105,20 @@ class CustomText():
         Tab key call this method.
         """
 
+        sel_first, sel_last = self.widget.index('sel.first'), self.widget.index('sel.last')
+
         if not self.macros():
             self.widget.insert('insert', ' '*self.editor.config['tab_size'])
+
+        if sel_first != 'None':
+            selected_lines = int(float(sel_last) - float(sel_first)) + 1
+            first_selected_line = int(float(sel_first)) + 1
+
+            for line in range(selected_lines):
+                line += first_selected_line
+
+                self.widget.insert(f'{line}.0', ' ' * self.editor.config['tab_size'])
+
         return 'break'
 
     def macros(self):
