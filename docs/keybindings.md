@@ -12,6 +12,7 @@
 
 * `Ctrl+a` - Select all text.
 * `Ctrl+v` - Insert copied text.
+* `Ctrl+f` - Find input text.
 * `Ctrl+=` - Up text zoom.
 * `Ctrl+-` - Down text zoom.
 * `Shift+BackSpace` - Remove indentations in selected text.
