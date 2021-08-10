@@ -14,6 +14,8 @@
 
 * `sl` - Select text in input coordinates, for example: `sl 1.0 5.0`.
 
+* `fd` - Find input text, for example: `fd test text`.
+
 # Other
 
 * `cfg` - Open config file.

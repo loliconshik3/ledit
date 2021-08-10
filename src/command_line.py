@@ -24,6 +24,15 @@ class CommandLine():
         self.info_widget = tkinter.Canvas(self.bottom_frame, height=15, background=theme['info_panel_background_color'])
         self.__init_widget()
 
+        try:
+            home = os.path.expanduser("~")
+            self.history = open(f"{home}/.ledit/commands_history", "r+")
+        except:
+            self.history = open(f"{os.path.dirname(os.path.abspath(__file__))}/commands_history", "r+")
+        
+        self.history_text = self.history.readlines()
+        self.history_index = len(self.history_text) - 1
+
     def __init_widget(self):
         """
         Данный метод отвечает за инициализацию виджета для ввода комманд.
@@ -44,7 +53,53 @@ class CommandLine():
         #self.info_widget.create_text(2, 2, anchor='nw', text=info_text, font=self.font, fill=self.theme['text_color'])
 
         self.widget.bind("<Return>", self.use_command)
+        self.widget.bind("<Up>", self.previous_command)
+        self.widget.bind("<Down>", self.next_command)
 
+
+    def previous_command(self, event):
+        if self.history_index >= 0:
+            self.widget.delete('0', 'end')
+            self.widget.insert('0', self.history_text[self.history_index].replace("\n", ""))
+            if self.history_index > 0: self.history_index -= 1
+        else:
+            self.history_index = len(self.history_text) - 1
+            self.widget.delete('0', 'end')
+
+    def next_command(self, event):
+        if self.history_index <= len(self.history_text) - 1:
+            if self.history_index < len(self.history_text) - 1: self.history_index += 1
+            self.widget.delete('0', 'end')
+            self.widget.insert('0', self.history_text[self.history_index].replace("\n", ""))
+        else:
+            self.history_index = len(self.history_text) - 1
+            self.widget.delete('0', 'end')
+
+    def update_history(self, text):
+        """
+        This method update ledit commands history.
+        """
+
+        self.history_text.append(text)
+
+        self.history.close()
+
+        try:
+            home = os.path.expanduser("~")
+            self.history = open(f"{home}/.ledit/commands_history", "w")
+        except:
+            self.history = open(f"{os.path.dirname(os.path.abspath(__file__))}/commands_history", "w")
+
+        self.history.writelines("\n".join(self.history_text))
+        self.history.close()
+
+        try:
+            home = os.path.expanduser("~")
+            self.history = open(f"{home}/.ledit/commands_history", "r+")
+        except:
+            self.history = open(f"{os.path.dirname(os.path.abspath(__file__))}/commands_history", "r+")
+
+        self.history_index = len(self.history_text) - 1
 
     def use_command(self, event):
         """
@@ -52,10 +107,17 @@ class CommandLine():
         Имена и аргументы комманд настраиваются в файле config.json
         """
 
-        commands    = self.config['commands']
-        command     = self.widget.get().split(' ')
+        commands        = self.config['commands']
+        command_text    = self.widget.get()
+        command         = command_text.split(' ')
         self.widget.delete("0", tkinter.END)
-        
+
+        try:
+            if command_text != self.history_text[-1]:
+                self.update_history(command_text)
+        except:
+            self.update_history(command_text)
+
         if command[0] == commands['move']:
             self.move(command)
 
@@ -73,6 +135,9 @@ class CommandLine():
 
         elif command[0] == commands['select']['name']:
             self.select_text(start=command[1], end=command[2])
+
+        elif command[0] == commands['find']['name']:
+            self.find_text(command, commands)
 
         #elif command[0] == "run":
         #    if sys.platform == "win32":
@@ -107,6 +172,26 @@ class CommandLine():
             self.text.widget.see(command[1])
             self.text.widget.mark_set("insert", command[1])
         except: pass
+
+    def find_text(self, command, commands):
+        """
+        Replace command method. 
+        
+        Replace all (or not all) text.
+        """
+        
+        try:
+            finded_data   = " ".join(command[1:])
+
+            searched_first_index = self.text.widget.search(finded_data, 'insert', stopindex=f"end")
+            searched_last_index = self.text.widget.index(f"{searched_first_index}+{len(finded_data)}c")
+
+            self.text.widget.focus_set()
+            self.text.widget.see(searched_first_index)
+            self.text.widget.mark_set('insert', searched_last_index)
+            self.text.widget.tag_add('sel', searched_first_index, searched_last_index)
+        except Exception as e:
+            print(e)
 
     def replace_text(self, command, commands):
         """

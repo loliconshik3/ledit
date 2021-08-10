@@ -166,6 +166,8 @@ class Editor:
         self.text.widget.bind(keybinds['zoom_text_up'], self.up_text_size)
         self.text.widget.bind(keybinds['zoom_text_down'], self.down_text_size)
 
+        self.root.bind(keybinds['find_text'], self.find_text)
+
         if self.config['command_line']:
             self.root.bind(keybinds['focus_command_line'], self.focus_command_line)
 
@@ -399,6 +401,14 @@ class Editor:
     #
     #        with open(f"{os.path.dirname(os.path.abspath(__file__))}/config.json", "r") as file:
     #            self.config = json.loads(file.read())
+
+    def find_text(self, event):
+        """
+        This method calling find text method in command line.
+        """
+
+        self.command_line.widget.focus_set()
+        self.command_line.widget.insert('0', 'fd ')
 
     def select_text(self, event):
         """
