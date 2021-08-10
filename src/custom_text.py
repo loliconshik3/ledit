@@ -176,7 +176,7 @@ class CustomText():
                 if self.widget.get(f"{line}.0", f"{line}.{self.editor.config['tab_size']}") == tab_string:
                     self.widget.delete(f'{line}.0', f"{line}.{self.editor.config['tab_size']}")
 
-        return 'break'
+            return 'break'
 
 
     def backspace(self, event):

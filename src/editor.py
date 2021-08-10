@@ -326,7 +326,7 @@ class Editor:
             self.current_file_text = data
             self.command_line.redraw()
 
-            if self.filename == self.config['empty_file_name']:
+            if self.filename == self.maincfg['empty_file_name']:
                 try:
                     out = asksaveasfile(mode='w', initialdir=self.last_dir)
                 except:
@@ -347,8 +347,9 @@ class Editor:
                 out.write(data)
                 out.close()
                 print(f"System | Save {self.filename} file.")
-        except:
-            pass
+
+        except Exception as e:
+            print(e)
 
     def save_as(self, event):
         """
