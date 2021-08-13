@@ -232,13 +232,14 @@ class CommandLine():
             file_ext        = self.editor.file_ext
             name            = self.editor.maincfg['title'] #self.config['name']
             version         = self.editor.maincfg['version'] #self.config['version']
+            text_scale      = self.editor.text_percentage_size
             theme           = self.config['color_theme']
             system          = sys.platform
 
             if self.editor.current_file_text != self.text.widget.get('1.0', 'end'):
                 filename += '*'
 
-            info_text = f"{filename} ({insert_index}) | ft: {file_ext} | utf-8 | {system} | {name} v{version} | theme: {theme} | by loliconshik3"
+            info_text = f"{filename} ({insert_index}) | ft: {file_ext} | utf-8 | scale: {text_scale} | {system} | {name} v{version} | theme: {theme} | by loliconshik3"
 
             self.info_widget.create_text(2, 2, anchor='nw', text=info_text, font=self.font, fill=self.theme['info_panel_text_color'])
         except Exception as e:

@@ -60,6 +60,7 @@
     "font_size" : 13,
     "command_font" : "Code New Roman",
     "command_font_size" : 11,
+    "text_scale" : 1.0,
 
     "fixed_screen_size" : false,
     "adaptive_screen_size" : false,

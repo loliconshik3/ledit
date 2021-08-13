@@ -85,7 +85,7 @@ class Editor:
         self.text = self.main_frame.text
         self.text.editor = self
         self.text.widget.focus_set()
-        self.text_percentage_size = 1.0
+        self.text_percentage_size = self.config['text_scale']
         self.current_file_text = None
         #=============================
 
@@ -209,18 +209,28 @@ class Editor:
 
     #====================Update Functions====================
     def up_text_size(self, event):
-        if self.text_percentage_size < 2.0:
+        if self.text_percentage_size >= 1.0 and self.text_percentage_size < 2.0:
             self.text_percentage_size += 0.25
+        elif self.text_percentage_size >= 0.8 and self.text_percentage_size < 1.0:
+            self.text_percentage_size += 0.1
 
-            self.text.font.configure(size=int(self.config['font_size'] * self.text_percentage_size))
-            self.text.widget.configure(font=self.text.font)
+        self.text.font.configure(size=int(self.config['font_size'] * self.text_percentage_size))
+        self.text.widget.configure(font=self.text.font)
+
+        self.main_frame.linenumbers.redraw()
+        self.command_line.redraw()
 
     def down_text_size(self, event):
-        if self.text_percentage_size > 0.75:
+        if self.text_percentage_size > 1.0:
             self.text_percentage_size -= 0.25
+        elif self.text_percentage_size > 0.8:
+            self.text_percentage_size -= 0.10
 
-            self.text.font.configure(size=int(self.config['font_size'] * self.text_percentage_size))
-            self.text.widget.configure(font=self.text.font)
+        self.text.font.configure(size=int(self.config['font_size'] * self.text_percentage_size))
+        self.text.widget.configure(font=self.text.font)
+
+        self.main_frame.linenumbers.redraw()
+        self.command_line.redraw()
 
     def update_filename(self, filename=""):
         """
