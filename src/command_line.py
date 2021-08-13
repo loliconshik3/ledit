@@ -130,9 +130,11 @@ class CommandLine():
             self.replace_text(command, commands)
 
         elif command[0] == commands['open']['name']:
+            if command[1][0:2] == "./": command[1] = command[1].replace("./", f"{os.path.dirname(os.path.abspath(__file__))}/", 1)
             self.editor.open_file(path = command[1])
 
         elif command[0] == commands['open_directory']['name']:
+            if command[1][0:2] == "./": command[1] = command[1].replace("./", f"{os.path.dirname(os.path.abspath(__file__))}/", 1)
             self.editor.open_directory(path = command[1])
 
         elif command[0] == commands['open_config']['name']:
@@ -144,6 +146,7 @@ class CommandLine():
         elif command[0] == commands['find']['name']:
             self.find_text(command, commands)
 
+        return 'break'
         #elif command[0] == "run":
         #    if sys.platform == "win32":
         #        new_window_command = "cmd.exe /c start".split()
