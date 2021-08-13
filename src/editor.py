@@ -446,7 +446,7 @@ class Editor:
     def quit(self, event):
         choice = True
         if self.current_file_text != self.text.widget.get('1.0', 'end'):
-            choice = askokcancel(title="Quit editor", message="You have unsaved files. Are you sure?")
+            choice = askokcancel(title="Quit editor", message="You have unsaved files. Are you sure?", icon='warning')
         
         if choice:
             exit()
