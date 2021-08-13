@@ -21,7 +21,7 @@
             "syntax_list" : [
                 "def", "pass", "break", "if", "elif", "else", "continue", "for", "in", "while",
                 "self", "try", "except", "return", "None", "True", "False", "as", "import", "from",
-                "class", "lambda", "is", "with", "not", "await"
+                "class", "lambda", "is", "with", "not", "await", "async"
             ]
         },
 
@@ -30,7 +30,7 @@
             "color_everywhere" : true,
 
             "syntax_list" : [
-                "+", "+=", "-", "-=", "=", "==", "*", "*=", "/", "/=", "//", "%"
+                "+", "+=", "-", "-=", "=", "==", "*", "*=", "/", "/=", "//", "%", "!=", "<=", ">="
             ]
         }
     },
