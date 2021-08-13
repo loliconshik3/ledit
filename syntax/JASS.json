@@ -6,7 +6,7 @@
     "comment_color" : "#6a9947",
 
     "syntax_accept_chars" : [
-        null, "", " ", "(", ")", "{", "}", "[", "]", ":", ".", "="
+        null, "", " ", "(", ")", "{", "}", "[", "]", ":", ".", "=", ","
     ],
 
     "function_syntax" : "function {name} takes",
