@@ -58,6 +58,8 @@ class CommandLine():
 
 
     def previous_command(self, event):
+        print(self.history_index)
+
         if self.history_index >= 0:
             self.widget.delete('0', 'end')
             self.widget.insert('0', self.history_text[self.history_index].replace("\n", ""))
@@ -67,6 +69,8 @@ class CommandLine():
             self.widget.delete('0', 'end')
 
     def next_command(self, event):
+        print(self.history_index)
+
         if self.history_index <= len(self.history_text) - 1:
             if self.history_index < len(self.history_text) - 1: self.history_index += 1
             self.widget.delete('0', 'end')
@@ -112,11 +116,12 @@ class CommandLine():
         command         = command_text.split(' ')
         self.widget.delete("0", tkinter.END)
 
-        try:
-            if command_text != self.history_text[-1]:
+        if command_text != "":
+            try:
+                if command_text != self.history_text[-1]:
+                    self.update_history(command_text)
+            except:
                 self.update_history(command_text)
-        except:
-            self.update_history(command_text)
 
         if command[0] == commands['move']:
             self.move(command)

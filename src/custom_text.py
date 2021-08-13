@@ -72,8 +72,10 @@ class CustomText():
         syntax = self.syntax_file
         try: self.widget.tag_config("function", foreground=syntax['function_color']) 
         except: pass
-        self.widget.tag_config("string", foreground=syntax['string_color'])
-        self.widget.tag_config("comment", foreground=syntax['comment_color'])
+        try: self.widget.tag_config("string", foreground=syntax['string_color'])
+        except: pass
+        try: self.widget.tag_config("comment", foreground=syntax['comment_color'])
+        except: pass
 
         for _class in syntax['classes'].keys():
             color = syntax['classes'][_class]['color']
@@ -312,8 +314,8 @@ class CustomText():
         quotes_list = {}; count = 0
         quotes = ["'", '"']
         
-        first_line = utils.edit_index(first_line, -10, 0)
-        last_line = utils.edit_index(last_line, 10, 0)
+        first_line = self.widget.index(f"{first_line}-10l") #utils.edit_index(first_line, -10, 0)
+        last_line = self.widget.index(f"{last_line}+10l") #utils.edit_index(last_line, 10, 0)
 
         self.widget.tag_remove("string", first_line, last_line)
         for quote in quotes:
