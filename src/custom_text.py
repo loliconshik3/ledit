@@ -113,10 +113,10 @@ class CustomText():
             self.widget.insert('insert', ' '*self.editor.config['tab_size'])
 
         if sel_first != 'None':
-            selected_lines = int(float(sel_last) - float(sel_first)) + 1
+            selected_lines = int(int(float(sel_last)) - int(float(sel_first))) + 1
             first_selected_line = int(float(sel_first)) + 1
 
-            for line in range(selected_lines):
+            for line in range(selected_lines-1):
                 line += first_selected_line
 
                 self.widget.insert(f'{line}.0', ' ' * self.editor.config['tab_size'])
