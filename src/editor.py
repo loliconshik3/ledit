@@ -1,5 +1,5 @@
 from tkinter.filedialog import asksaveasfile, askopenfile, askdirectory
-from tkinter.messagebox import showerror
+from tkinter.messagebox import showerror, askokcancel
 from tkinter import messagebox
 import tkinter.font as tkfont
 import command_line
@@ -444,4 +444,9 @@ class Editor:
             self.text.widget.focus_set()
 
     def quit(self, event):
-        exit()
+        choice = True
+        if self.current_file_text != self.text.widget.get('1.0', 'end'):
+            choice = askokcancel(title="Quit editor", message="You have unsaved files. Are you sure?")
+        
+        if choice:
+            exit()
