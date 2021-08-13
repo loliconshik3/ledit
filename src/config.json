@@ -9,6 +9,7 @@
         "open_file" : "<Control-Key-o>",
         "save_file" : "<Control-Key-s>",
         "save_as"   : "<Control-S>",
+        "quit" : "<Control-Key-q>",
         
         "open_directory" : "<Control-Key-k>",
 

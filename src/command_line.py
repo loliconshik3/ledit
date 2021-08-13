@@ -94,6 +94,12 @@ class CommandLine():
         except:
             self.history = open(f"{os.path.dirname(os.path.abspath(__file__))}/commands_history", "w")
 
+        index = 0
+        for line in self.history_text:
+            if line[-2:] == "\n":
+                self.history_text[index] = self.history_text[index][:-2]
+            index += 1
+
         self.history.writelines("\n".join(self.history_text))
         self.history.close()
 

@@ -19,4 +19,5 @@
 
 # Work with editor
 
+* `Ctrl+q` - Quit editor.
 * `Ctrl+e` - Set focus on command line.

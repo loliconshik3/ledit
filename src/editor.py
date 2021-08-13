@@ -162,6 +162,7 @@ class Editor:
         self.root.bind(keybinds['select_text'], self.select_text)
         self.root.bind(keybinds['open_file'], self.open_file)
         self.root.bind_all(keybinds['save_as'], self.save_as)
+        self.root.bind(keybinds['quit'], self.quit)
 
         self.text.widget.bind(keybinds['zoom_text_up'], self.up_text_size)
         self.text.widget.bind(keybinds['zoom_text_down'], self.down_text_size)
@@ -441,3 +442,6 @@ class Editor:
             self.command_line.widget.focus_set()
         else:
             self.text.widget.focus_set()
+
+    def quit(self, event):
+        exit()
