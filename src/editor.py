@@ -167,7 +167,7 @@ class Editor:
         self.text.widget.bind(keybinds['zoom_text_up'], self.up_text_size)
         self.text.widget.bind(keybinds['zoom_text_down'], self.down_text_size)
 
-        self.root.bind(keybinds['find_text'], self.find_text)
+        self.text.widget.bind(keybinds['find_text'], self.find_text)
 
         if self.config['command_line']:
             self.root.bind(keybinds['focus_command_line'], self.focus_command_line)
@@ -418,8 +418,17 @@ class Editor:
         This method calling find text method in command line.
         """
 
+        sel_first, sel_last = self.text.widget.index('sel.first'), self.text.widget.index('sel.last')
+
+        search_request = ""
+
+        if sel_first != 'None':
+            search_request = self.text.widget.get(sel_first, sel_last)
+
         self.command_line.widget.focus_set()
-        self.command_line.widget.insert('0', 'fd ')
+        self.command_line.widget.insert('0', f'fd {search_request}')
+
+        return 'break'
 
     def select_text(self, event):
         """

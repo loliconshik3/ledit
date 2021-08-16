@@ -90,18 +90,24 @@ class CustomText():
         """
 
         insert_index = self.widget.index('insert')
-        try:
-            sel_first, sel_last = self.widget.index('sel.first'), self.widget.index('sel.last')
+        sel_first, sel_last = self.widget.index('sel.first'), self.widget.index('sel.last')
+        
+        if sel_first != 'None':
             self.widget.delete(sel_first, sel_last)
-        except:
-            pass
+            insert_index = sel_first
+        
         self.widget.insert(insert_index, self.widget.clipboard_get())
-
         last_insert = self.widget.index('insert')
+
+        if sel_last != 'None':
+            last_insert = sel_last
+
+        print(insert_index, last_insert)
+
         self.syntax_highlight(first_line=insert_index, last_line=last_insert, replace=False)
         
-        
         self.widget.see(last_insert)
+        
         return 'break'
 
     def tab(self, event):
@@ -191,12 +197,14 @@ class CustomText():
         tab_size_index = f"insert-{self.editor.config['tab_size']}c"
         backspace = self.widget.get(tab_size_index, 'insert')
 
+        if sel_first != 'None':
+            self.widget.delete(sel_first, sel_last)
+            return 'break'
+
         if backspace == " " * self.editor.config['tab_size']:
             self.widget.delete(tab_size_index, 'insert')
-        elif sel_first == 'None':
-            self.widget.delete('insert-1c')
         else:
-            self.widget.delete(sel_first, sel_last)
+            self.widget.delete('insert-1c')
 
         return 'break'
 
