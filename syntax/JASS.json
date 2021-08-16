@@ -37,7 +37,7 @@
 				"ordercode", "player", "playercolor", "force", "quest", "questitem", "race", "rect",
 				"sound", "soundtype", "effect", "techcode", "timer", "timerdialog", "unitcode", "boolexpr",
 				"event", "triggeraction", "triggercondition", "region", "heroskill", "trackable", "multiboarditem",
-                "nothing", "null", "true", "false", "trigger"
+                "nothing", "null", "true", "false", "trigger", "public"
             ]
         },
 
