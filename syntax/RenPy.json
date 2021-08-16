@@ -46,6 +46,8 @@
     },
 
     "macros" : {
-        "menu" : "menu:\n\tfirst_choice:\n\t\tpass\n\tsecond_choice:\n\t\tpass"
+        "separator" : "@",
+
+        "menu@first_choice@second_choice@third_choice" : "menu:\n\t$first_choice$:\n\t\tpass\n\t$second_choice$:\n\t\tpass\n\t$third_choice$:\n\t\tpass"
     }
 }

@@ -20,6 +20,8 @@
     },
 
     "macros" : {
+        "separator" : "@",
+
         "main" : "{\n\ttest\n}"
     }
 }

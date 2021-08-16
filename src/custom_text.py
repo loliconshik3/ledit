@@ -4,6 +4,7 @@ import linenum
 import utils
 import json
 import os
+import re
 
 class CustomText():
     def __init__(self, root, config, theme):
@@ -138,26 +139,62 @@ class CustomText():
 
         try:
             macros_list = self.syntax_file['macros']
+            macros_separator = self.syntax_file['macros']['separator']
 
             insert_index = self.widget.index('insert')
 
             for macros in macros_list.keys():
-                macros_start_index = self.widget.index(f'insert-{len(macros)}c')
-                macros_before_char = self.widget.get(f"{macros_start_index}-1c", macros_start_index)
+                macros_length = 0
+                macros_dict = {}
 
-                if self.widget.get(macros_start_index, insert_index) == macros:
+                if macros_separator in macros:
+                    macros_arg_list = macros.split(f'{macros_separator}')
+                    macros_command = macros_arg_list[0]
+                    macros_length += len(macros_command)
+
+                    string = f"{macros_arg_list[0]}{macros_separator}\S+$"
+                    search = re.search(string, self.widget.get(f'{insert_index} linestart', f'{insert_index}'))
+                    if search != None:
+                        searched_string = search.string
+                        search_arg_list = searched_string.split(f'{macros_separator}')
+
+                        for key in macros_arg_list[1:]:
+                            for value in search_arg_list[1:]:
+                                macros_dict[key] = value
+                                search_arg_list.remove(value)
+                                macros_length += len(value) + 1
+                                break  
+                else: 
+                    macros_command = macros
+                    macros_length = len(macros)
+
+                macros_start_index = self.widget.index(f'{insert_index}-{macros_length}c')
+                macros_before_char = self.widget.get(f"{macros_start_index}-1c", macros_start_index)
+                macros_string = self.widget.get(macros_start_index, insert_index)
+
+                if macros_command in macros_string:
+                    macros_text = macros_list[macros]
+                    for key in macros_dict.keys():
+                        macros_text = macros_text.replace(f"${key}$", macros_dict[key])
 
                     if macros_before_char == "" or macros_before_char == "\n" or macros_before_char == " ":
-                        tabs = utils.get_line_tabs(self.widget.get(f"{macros_start_index} linestart", f"{macros_start_index} lineend"),
+
+                        # Get tabs of line
+                        tabs = utils.get_line_tabs(self.widget.get(
+                        f"{macros_start_index} linestart", 
+                        f"{macros_start_index} lineend"),
                         self.editor.config['tab_size'])
                         tab_string = (self.editor.config['tab_size'] * " ") * tabs
 
+                        # Delete macros command
                         self.widget.delete(macros_start_index, insert_index)
 
-                        total_text = macros_list[macros].replace('\t\t', "  " * self.editor.config['tab_size'] + tab_string)
+                        # Insert macros text
+                        total_text = macros_text.replace('\t\t', "  " * self.editor.config['tab_size'] + tab_string)
                         total_text = total_text.replace('\t', " " * self.editor.config['tab_size'] + tab_string)
                         self.widget.insert('insert', total_text)
 
+                        # Highlight of inserted text
                         self.syntax_highlight(first_line=macros_start_index, last_line=self.widget.index('insert'), replace=False)
 
                         return True

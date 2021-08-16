@@ -36,7 +36,9 @@
     },
 
     "macros" : {
-        "class" : "class ClassName():\n\n\tdef __init__(self):\n\t\tpass",
-        "def" : "def name():\n\tpass"
+        "separator" : "@",
+
+        "class@name" : "class $name$():\n\n\tdef __init__(self):\n\t\tpass",
+        "def@name" : "def $name$():\n\tpass"
     }
 }
